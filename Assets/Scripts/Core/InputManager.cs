@@ -51,8 +51,8 @@ namespace EvilCubes.Core
             currentState = temp;*/
 
             //Calculate the current states
-            currentMouseState[MouseState.X_DELTA] = Input.mouseScrollDelta.x;
-            currentMouseState[MouseState.Y_DELTA] = Input.mouseScrollDelta.y;
+            currentMouseState[MouseState.X_DELTA] = Input.GetAxis("Mouse X");
+            currentMouseState[MouseState.Y_DELTA] = Input.GetAxis("Mouse Y");
 
             /*if (previousState[Command.NEXT_WEAPON] < 0.5f)
             {
