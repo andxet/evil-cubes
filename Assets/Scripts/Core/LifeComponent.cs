@@ -23,6 +23,7 @@ namespace EvilCubes.Core
             Life = MaxLife;
         }
 
+        /////////////////////////////////////////////
         void Start()
         {
 

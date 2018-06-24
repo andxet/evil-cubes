@@ -6,22 +6,15 @@ namespace EvilCubes.Core
 {
     public class PlayerCamera : MonoBehaviour
     {
-        //protected Camera mCam;
         protected InputManager mInput;
         protected bool mInit = false;
         protected float mSensibility;
 
         /////////////////////////////////////////////
-        void Start()
-        {
-            //mCam = GetComponent<Camera>();
-        }
-
-        /////////////////////////////////////////////
-        public void Init(InputManager mgr, float sensivity)
+        public void Init(InputManager mgr, float sensibility)
         {
             mInput = mgr;
-            mSensibility = sensivity;
+            mSensibility = sensibility;
             mInit = true;
         }
     }

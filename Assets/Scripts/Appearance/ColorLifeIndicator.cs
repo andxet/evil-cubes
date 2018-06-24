@@ -22,8 +22,7 @@ namespace EvilCubes.Appearance
         int mMaxLife;
         int mCurrentLife;
 
-
-        // Use this for initialization
+        /////////////////////////////////////////////
         void Start()
         {
             mLifeComponent = GetComponent<LifeComponent>();
@@ -34,13 +33,14 @@ namespace EvilCubes.Appearance
             UpdateColor();
         }
 
-        // Update is called once per frame
+        /////////////////////////////////////////////
         void Update()
         {
             if (mCurrentLife != mLifeComponent.Life)
                 UpdateColor();
         }
 
+        /////////////////////////////////////////////
         void UpdateColor()
         {
             mCurrentLife = mLifeComponent.Life;
