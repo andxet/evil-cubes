@@ -8,10 +8,11 @@ namespace EvilCubes.Core
     public class GameManager : MonoBehaviour
     {
         //This is a singleton
-        public static GameManager _instance { get; private set; }
+        static GameManager _instance;
 
         [Header("Input configurations")]
-        [SerializeField] float mTurnSensibility = 1.0f;
+        [SerializeField] 
+        float mTurnSensibility = 1.0f;
 
         [SerializeField]
         PlayerManager mPlayer;
@@ -46,6 +47,20 @@ namespace EvilCubes.Core
         void Update()
         {
 
+        }
+
+        /////////////////////////////////////////////
+        public static GameManager GetInstance()
+        {
+            if (_instance == null)
+                Debug.LogWarning("GameManager: trying to acces to the instance, but the instance doesn't exists!");
+            return _instance;
+        }
+
+        /////////////////////////////////////////////
+        public InputManager GetInputManager()
+        {
+            return mInput;
         }
     }
 }
