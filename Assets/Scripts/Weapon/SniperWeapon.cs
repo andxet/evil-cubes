@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace EvilCubes.Weapon
 {
-    public class SniperWeapon : MonoBehaviour
+    public class SniperWeapon : Weapon
     {
+        //Remember to call base.Awake if Awake function is needed
 
         /////////////////////////////////////////////
         void Start()
@@ -17,6 +18,12 @@ namespace EvilCubes.Weapon
         void Update()
         {
 
+        }
+
+        /////////////////////////////////////////////
+        public override void Shoot()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
