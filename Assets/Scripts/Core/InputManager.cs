@@ -45,20 +45,10 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         void Update()
         {
-            //Swap the dictionaries
-            /*Dictionary<Command, float> temp = previousState;
-            previousState = currentState;
-            currentState = temp;*/
-
             //Calculate the current states
             currentMouseState[MouseState.X_DELTA] = Input.GetAxis("Mouse X");
             currentMouseState[MouseState.Y_DELTA] = Input.GetAxis("Mouse Y");
 
-            /*if (previousState[Command.NEXT_WEAPON] < 0.5f)
-            {
-                if (Input.GetAxis("Scroll Wheel") < 0.1f)
-                    currentState[Command.NEXT_WEAPON] = 1.0f;
-            }*/
             currentCommandState[Command.NEXT_WEAPON] = Input.GetAxis("Mouse ScrollWheel") > 0;
             currentCommandState[Command.PREVIOUS_WEAPON] = Input.GetAxis("Mouse ScrollWheel") < 0;
             currentCommandState[Command.SHOOT_DOWN] = Input.GetButtonDown("Fire1");
