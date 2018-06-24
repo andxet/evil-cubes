@@ -18,15 +18,19 @@ namespace EvilCubes.Util
         {
             mActiveObjects = new List<PoolElement>();
             mAvailableObjects = new Queue<PoolElement>();
+
+            GameObject root = new GameObject("Pool_" + go.name);
             for (int i = 0; i < elements; i++)
             {
                 GameObject newOb = Object.Instantiate(go);
+                newOb.transform.parent = root.transform;
                 PoolElement component = newOb.GetComponent<PoolElement>();
                 if(component == null)
                 {
                     Debug.LogError("ObjectPool: the GameObject " + go + " doesn't have a T component.");
                 }
-                mActiveObjects.Add(component);
+                component.SetProprietaryPool(this);
+                mAvailableObjects.Enqueue(component);
             }
         }
 

@@ -6,7 +6,18 @@ namespace EvilCubes.Util
 {
     public class PoolElement : MonoBehaviour
     {
-        ObjectPool mProprietaryPool;
+        protected ObjectPool mProprietaryPool;
+
+        /////////////////////////////////////////////
+        public void SetProprietaryPool(ObjectPool pool)
+        {
+            if(mProprietaryPool != null)
+            {
+                Debug.LogWarning("PoolElement: Trying to assign a new pool.");
+                return;
+            }
+            mProprietaryPool = pool;
+        }
 
         /////////////////////////////////////////////
         public void Reset()
