@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +14,11 @@ namespace EvilCubes.Core
         [Header("Input configurations")]
         [SerializeField] 
         float mTurnSensibility = 1.0f;
-
         [SerializeField]
         PlayerManager mPlayer;
         InputManager mInput;
+        Crosshair mCrossHair;
+        CameraManager mCameraManager;
 
         /////////////////////////////////////////////
         void Awake()
@@ -28,6 +30,9 @@ namespace EvilCubes.Core
                 return;
             }
             _instance = this;
+            mInput = GetComponent<InputManager>();
+            mCrossHair = GetComponent<Crosshair>();
+            mCameraManager = GetComponent<CameraManager>();
         }
 
         /////////////////////////////////////////////
@@ -39,7 +44,6 @@ namespace EvilCubes.Core
                 enabled = false;
                 return;
             }
-            mInput = GetComponent<InputManager>();
             mPlayer.Init(mInput, mTurnSensibility);
         }
 
@@ -61,6 +65,18 @@ namespace EvilCubes.Core
         public InputManager GetInputManager()
         {
             return mInput;
+        }
+
+        /////////////////////////////////////////////
+        public Crosshair GetCrossHair()
+        {
+            return mCrossHair;
+        }
+
+        /////////////////////////////////////////////
+        public CameraManager GetCameraManager()
+        {
+            return mCameraManager;
         }
     }
 }

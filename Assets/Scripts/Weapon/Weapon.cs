@@ -16,11 +16,13 @@ namespace EvilCubes.Weapon
 
         protected InputManager mInputManager;
         protected ObjectPool mBulletPool;
+        protected Crosshair mCrossHair;
 
         /////////////////////////////////////////////
         protected void Start()
         {
             mInputManager = GameManager.GetInstance().GetInputManager();
+            mCrossHair = GameManager.GetInstance().GetCrossHair();
         }
 
         /////////////////////////////////////////////

@@ -18,7 +18,8 @@ namespace EvilCubes.Core
             SHOOT_DOWN,
             SHOOT,
             NEXT_WEAPON,
-            PREVIOUS_WEAPON
+            PREVIOUS_WEAPON,
+            CHANGE_CAMERA
         }
 
         Dictionary<Command, bool> currentCommandState = new Dictionary<Command, bool>();
@@ -34,6 +35,7 @@ namespace EvilCubes.Core
             currentCommandState.Add(Command.SHOOT, false);
             currentCommandState.Add(Command.NEXT_WEAPON, false);
             currentCommandState.Add(Command.PREVIOUS_WEAPON, false);
+            currentCommandState.Add(Command.CHANGE_CAMERA, false);
         }
 
         /////////////////////////////////////////////
@@ -54,6 +56,7 @@ namespace EvilCubes.Core
             currentCommandState[Command.SHOOT_DOWN] = Input.GetButtonDown("Fire1");
             currentCommandState[Command.SHOOT] = Input.GetButton("Fire1");
             currentCommandState[Command.PAUSE] = Input.GetButtonDown("Pause");
+            currentCommandState[Command.CHANGE_CAMERA] = Input.GetButtonDown("Pause");
 
 #if DEBUG
             if (currentCommandState[Command.NEXT_WEAPON])

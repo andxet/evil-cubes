@@ -152,6 +152,38 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1406377210554462, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587010944920678, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184820562981630, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242873453417666, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078995550257346, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883986566570544, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525962782840078, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496623660318200, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
   m_IsPrefabParent: 0
@@ -220,6 +252,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -10.3550005, y: -55.536003, z: -60.029003}
+--- !u!114 &420548972 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114177001136142726, guid: 8c62e53eac7a8401b8da00f19a194e66,
+    type: 2}
+  m_PrefabInternal: {fileID: 105022079}
+  m_Script: {fileID: 11500000, guid: 3c4ea3aff9ce14b89880a0f626dd9287, type: 3}
 --- !u!1001 &862225865
 Prefab:
   m_ObjectHideFlags: 0
@@ -272,6 +310,8 @@ GameObject:
   - component: {fileID: 1140376834}
   - component: {fileID: 1140376833}
   - component: {fileID: 1140376835}
+  - component: {fileID: 1140376836}
+  - component: {fileID: 1140376837}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -316,6 +356,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mTurnSensibility: 10
   mPlayer: {fileID: 1688479992}
+--- !u!114 &1140376836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1140376832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8cc54fb41cb742599d8668e6da896ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: 0
+--- !u!114 &1140376837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1140376832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16b91e2fbb05439b8192c7b425a3cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAlternativeCameras:
+  - {fileID: 1344063431}
+  - {fileID: 420548972}
+  mRearCamera: {fileID: 1183001142}
+--- !u!1 &1183001141 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1406377210554462, guid: 8c62e53eac7a8401b8da00f19a194e66,
+    type: 2}
+  m_PrefabInternal: {fileID: 105022079}
+--- !u!114 &1183001142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1183001141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fb2d30ec52742319c7ab60954ab0e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1344063431 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114539018143932144, guid: 8c62e53eac7a8401b8da00f19a194e66,
+    type: 2}
+  m_PrefabInternal: {fileID: 105022079}
+  m_Script: {fileID: 11500000, guid: 44f0375b84da54d9e81a7b479a919c01, type: 3}
 --- !u!114 &1688479992 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114495350141556316, guid: 8c62e53eac7a8401b8da00f19a194e66,

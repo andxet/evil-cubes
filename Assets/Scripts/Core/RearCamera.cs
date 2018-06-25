@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EvilCubes.Core
 {
-    public class RearCamera : MonoBehaviour
+    public class RearCamera : PlayerCamera
     {
 
         /////////////////////////////////////////////

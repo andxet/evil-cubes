@@ -32,6 +32,8 @@ namespace EvilCubes.Weapon
         /////////////////////////////////////////////
         void Update()
         {
+            if (mCrossHair != null)
+                transform.LookAt(mCrossHair.HitPoint);
             if(mInputManager.GetCommandState(InputManager.Command.SHOOT))
             {
                 if (Time.timeSinceLevelLoad > mLastShootTime + mCoolDownTime)
@@ -40,6 +42,7 @@ namespace EvilCubes.Weapon
                     mLastShootTime = Time.timeSinceLevelLoad;
                 }
             }
+
         }
 
         /////////////////////////////////////////////
