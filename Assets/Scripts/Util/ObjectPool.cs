@@ -12,24 +12,38 @@ namespace EvilCubes.Util
     {
         List<PoolElement> mActiveObjects;
         Queue<PoolElement> mAvailableObjects;
+#if DEBUG
+        int mMinimumAvailableElements;
+#endif
 
         /////////////////////////////////////////////
-        public ObjectPool(int elements, GameObject go)
+        public ObjectPool(int numElements, GameObject go)
         {
+            if(numElements < 1)
+            {
+                Debug.LogError("Failed to init the Object Pool");
+                return;
+            }
+
+#if DEBUG
+            mMinimumAvailableElements = numElements;
+#endif
+
             mActiveObjects = new List<PoolElement>();
             mAvailableObjects = new Queue<PoolElement>();
 
             GameObject root = new GameObject("Pool_" + go.name);
-            for (int i = 0; i < elements; i++)
+            for (int i = 0; i < numElements; i++)
             {
                 GameObject newOb = Object.Instantiate(go);
                 newOb.transform.parent = root.transform;
                 PoolElement component = newOb.GetComponent<PoolElement>();
                 if(component == null)
                 {
-                    Debug.LogError("ObjectPool: the GameObject " + go + " doesn't have a T component.");
+                    Debug.LogError("ObjectPool: the GameObject " + go + " doesn't have a PoolElement component.");
                 }
                 component.SetProprietaryPool(this);
+                component.Deactivate();
                 mAvailableObjects.Enqueue(component);
             }
         }
@@ -46,6 +60,13 @@ namespace EvilCubes.Util
             mActiveObjects.Add(element);
             element.Reset();
             Debug.Log("ObjectPool: resuming object " + element.gameObject);
+#if DEBUG
+            if(mMinimumAvailableElements > mAvailableObjects.Count)
+            {
+                mMinimumAvailableElements = mAvailableObjects.Count;
+                Debug.Log("ObjectPool: Minimum available elements reached: " + mMinimumAvailableElements);
+            }
+#endif
             return element;
         }
 
