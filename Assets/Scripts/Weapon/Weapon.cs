@@ -4,19 +4,46 @@ using UnityEngine;
 
 using EvilCubes.Core;
 using EvilCubes.Util;
+using System;
 
 namespace EvilCubes.Weapon
 {
-    public abstract class Weapon : MonoBehaviour
+    public class Weapon : MonoBehaviour
     {
         [SerializeField]
-        protected int mPoolDimension;
+        GameObject mBulletPrefab;
         [SerializeField]
-        protected GameObject mBulletPrefab;
+        GameObject mShootPoint;
+        [SerializeField]
+        float mCoolDownTime;
+        float mLastShootTime;
+        [SerializeField]
+        float mImprecision;
+        [SerializeField]
+        float mBulletShooted = 1;
 
-        protected InputManager mInputManager;
-        protected ObjectPool mBulletPool;
-        protected Crosshair mCrossHair;
+        InputManager mInputManager;
+        int mPoolDimension;
+        ObjectPool mBulletPool;
+        Crosshair mCrossHair;
+
+        /////////////////////////////////////////////
+        protected void Awake()
+        {
+            if (mBulletPrefab == null
+                || mBulletPrefab.GetComponent<Bullet>() == null
+                || mShootPoint == null
+                || mCoolDownTime < 0.1f
+                || mImprecision < 0 || mImprecision > 360
+                || mBulletShooted < 1)
+            {
+                Debug.LogError("Weapon: This weapon is not correctly initialized: " + name);
+                enabled = false;
+                return;
+            }
+            mPoolDimension = CalculatePoolDimension();
+            mBulletPool = new ObjectPool(mPoolDimension, mBulletPrefab);
+        }
 
         /////////////////////////////////////////////
         protected void Start()
@@ -26,18 +53,58 @@ namespace EvilCubes.Weapon
         }
 
         /////////////////////////////////////////////
-        protected void Awake()
+        void Update()
         {
-            if (mBulletPrefab == null)
+            if (mCrossHair != null)
+                transform.LookAt(mCrossHair.HitPoint);
+            if (mInputManager.GetCommandState(InputManager.Command.SHOOT))
             {
-                Debug.LogError("Weapon: This weapon is not correctly initialized.");
-                enabled = false;
-                return;
+                if (Time.timeSinceLevelLoad > mLastShootTime + mCoolDownTime)
+                {
+                    Shoot();
+                    mLastShootTime = Time.timeSinceLevelLoad;
+                }
             }
-            mBulletPool = new ObjectPool(mPoolDimension, mBulletPrefab);
         }
 
         /////////////////////////////////////////////
-        public abstract void Shoot();
+        void Shoot()
+        {
+            if (!enabled)
+                return;
+
+            for (int i = 0; i < mBulletShooted; i++)
+            {
+                Bullet bullet = CreateBullet();
+                if (bullet == null)
+                    continue;
+                bullet.transform.position = mShootPoint.transform.position;
+                bullet.transform.rotation = mShootPoint.transform.rotation * Quaternion.FromToRotation(Vector3.forward, Util.Util.RandomInsideCone(mImprecision));
+                bullet.Shoot();
+            }
+        }
+
+        /////////////////////////////////////////////
+        Bullet CreateBullet()
+        {
+            Bullet bullet = null;
+            {
+                PoolElement bulletEl = mBulletPool.Create();
+                if (bulletEl != null)
+                {
+                    bullet = bulletEl.gameObject.GetComponent<Bullet>();
+                }
+            }
+            if (bullet == null)
+                Debug.LogWarning("Failed to shoot the projectile. Maybe the bullet frefab is wrong?");
+            return bullet;
+        }
+
+        /////////////////////////////////////////////
+        int CalculatePoolDimension()
+        {
+            Bullet bullet = mBulletPrefab.GetComponent<Bullet>();
+            return (int)Mathf.Ceil(bullet.GetValidTime() / mCoolDownTime * (mBulletShooted + 1));
+        }
     }
 }

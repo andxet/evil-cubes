@@ -63,5 +63,10 @@ namespace EvilCubes.Weapon
             }
 
         }
+
+        public float GetValidTime()
+        {
+            return mValidtime;
+        }
     }
 }
