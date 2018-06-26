@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4046464930097640}
   - component: {fileID: 114102653661852774}
   m_Layer: 0
-  m_Name: MachineGun
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d9fda4f154926472fbc8c59ff0b5c603, type: 2}
+  - {fileID: 2100000, guid: 192d31586efa34adbbf1227c9522eadb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -210,7 +210,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d9fda4f154926472fbc8c59ff0b5c603, type: 2}
+  - {fileID: 2100000, guid: 192d31586efa34adbbf1227c9522eadb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -255,9 +255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588e4a5f2c565446cabaaba34f8cf370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mBulletPrefab: {fileID: 1375621605637448, guid: 33a13bf75f3854b009d6df2dd5a313c8,
+  mBulletPrefab: {fileID: 1375621605637448, guid: 688236a92ac3f416fae094ed8f730d92,
     type: 2}
   mShootPoint: {fileID: 1023732169918624}
-  mCoolDownTime: 0.1
-  mImprecision: 3
-  mBulletShooted: 1
+  mCoolDownTime: 0.7
+  mImprecision: 10
+  mBulletShooted: 10

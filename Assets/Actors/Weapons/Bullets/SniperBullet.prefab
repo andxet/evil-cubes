@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33597821070326480}
   - component: {fileID: 23607758591317324}
   - component: {fileID: 135741960087509096}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,8 +38,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4367220717826130}
   - component: {fileID: 114007532170532922}
-  m_Layer: 0
-  m_Name: MachineGunBullet
+  m_Layer: 2
+  m_Name: SniperBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ Transform:
   m_GameObject: {fileID: 1184811670583210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_Children: []
   m_Father: {fileID: 4367220717826130}
   m_RootOrder: 0
@@ -87,7 +87,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 41790d3d99024455195e8092edc90262, type: 2}
+  - {fileID: 2100000, guid: 4048e3628bb674f73a73808c667cd824, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d62dac6aa7b498a8a5ed7a35f8a706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mDamage: 10
-  mVelocity: 10
-  mValidtime: 5
+  mDamage: 200
+  mVelocity: 40
+  mValidtime: 2
 --- !u!135 &135741960087509096
 SphereCollider:
   m_ObjectHideFlags: 1
