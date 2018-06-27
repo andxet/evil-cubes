@@ -152,44 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1406377210554462, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587010944920678, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1184820562981630, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242873453417666, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1078995550257346, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1883986566570544, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1525962782840078, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1496623660318200, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114495350141556316, guid: 8c62e53eac7a8401b8da00f19a194e66,
-        type: 2}
-      propertyPath: mWeaponPrefabList.Array.data[0]
-      value: 
-      objectReference: {fileID: 1432784223939712, guid: 21fc7dc298d604e4b979dd7aeaa97a84,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c62e53eac7a8401b8da00f19a194e66, type: 2}
   m_IsPrefabParent: 0
@@ -567,22 +529,28 @@ MonoBehaviour:
   - {fileID: 1344063431}
   - {fileID: 420548972}
   mRearCamera: {fileID: 1183001143}
---- !u!1 &1183001141 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1406377210554462, guid: 8c62e53eac7a8401b8da00f19a194e66,
+  mOnCameraChangedIsFPS:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1688479992}
+        m_MethodName: HidePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: EvilCubes.Core.CameraManager+CameraEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1183001143 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114866617834002750, guid: 8c62e53eac7a8401b8da00f19a194e66,
     type: 2}
   m_PrefabInternal: {fileID: 105022079}
---- !u!114 &1183001143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1183001141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3fb2d30ec52742319c7ab60954ab0e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1344063431 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114539018143932144, guid: 8c62e53eac7a8401b8da00f19a194e66,

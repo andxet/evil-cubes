@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EvilCubes.Core
 {
     public class CameraManager : MonoBehaviour
     {
+        [System.Serializable]
+        public class CameraEvent : UnityEvent<bool> {}
+
         [SerializeField]
         List<PlayerCamera> mAlternativeCameras = new List<PlayerCamera>();
         [SerializeField]
         PlayerCamera mRearCamera;
+        [SerializeField]
+        CameraEvent mOnCameraChangedIsFPS;
 
         int mActiveCamera = 0;
         InputManager mInput;
@@ -23,6 +29,9 @@ namespace EvilCubes.Core
                 Debug.LogWarning("CameraManager: Error in manager configuration");
                 enabled = false;
             }
+            //Notify is it is a fps camera
+            bool isFps = mAlternativeCameras[mActiveCamera].GetComponent<FirstPersonCamera>() != null;
+            mOnCameraChangedIsFPS.Invoke(isFps);
         }
 
         /////////////////////////////////////////////
@@ -44,11 +53,15 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         void ActivateCamera(int index)
         {
-            if(index > 0 && index < mAlternativeCameras.Count)
+            if(index >= 0 && index < mAlternativeCameras.Count)
             {
                 mAlternativeCameras[mActiveCamera].gameObject.SetActive(false);
                 mActiveCamera = index;
                 mAlternativeCameras[mActiveCamera].gameObject.SetActive(true);
+
+                //Notify is it is a fps camera
+                bool isFps = mAlternativeCameras[mActiveCamera].GetComponent<FirstPersonCamera>() != null;
+                mOnCameraChangedIsFPS.Invoke(isFps);
             }
         }
     }

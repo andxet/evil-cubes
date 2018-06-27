@@ -56,7 +56,7 @@ namespace EvilCubes.Core
             currentCommandState[Command.SHOOT_DOWN] = Input.GetButtonDown("Fire1");
             currentCommandState[Command.SHOOT] = Input.GetButton("Fire1");
             currentCommandState[Command.PAUSE] = Input.GetButtonDown("Pause");
-            currentCommandState[Command.CHANGE_CAMERA] = Input.GetButtonDown("Pause");
+            currentCommandState[Command.CHANGE_CAMERA] = Input.GetButtonDown("Change Camera");
 
 #if DEBUG
             if (currentCommandState[Command.NEXT_WEAPON])

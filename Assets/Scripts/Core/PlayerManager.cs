@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using EvilCubes.Weapon;
 
 namespace EvilCubes.Core
@@ -17,6 +18,8 @@ namespace EvilCubes.Core
         List<GameObject> mWeaponPrefabList = new List<GameObject>();
         [SerializeField]
         Transform mHandPosition;
+        [SerializeField]
+        GameObject mPlayerModel;
 
         List<Weapon.Weapon> mWeaponList = new List<Weapon.Weapon>();
         int mCurrentWeapon = 0;
@@ -28,7 +31,7 @@ namespace EvilCubes.Core
         void Awake()
         {
             //Check only prefabs internal objects, the other objects will be injected by the GameManager
-            if (mFirstPersonCamera == null || mThirdPersonCamera == null || mRetroCamera == null || mHandPosition == null)
+            if (mFirstPersonCamera == null || mThirdPersonCamera == null || mRetroCamera == null || mHandPosition == null || mPlayerModel == null)
             {
                 Debug.LogError("PlayerManager: This manager is not correctly initialized.");
                 enabled = false;
@@ -87,10 +90,10 @@ namespace EvilCubes.Core
 
                 //Weapon management
                 if (mInput.GetCommandState(InputManager.Command.NEXT_WEAPON))
-                    ChangeWeapon(mCurrentWeapon == mWeaponList.Count ? 0 : mCurrentWeapon + 1);
+                    ChangeWeapon(mCurrentWeapon == mWeaponList.Count - 1 ? 0 : mCurrentWeapon + 1);
                 
                 if (mInput.GetCommandState(InputManager.Command.PREVIOUS_WEAPON))
-                    ChangeWeapon(mCurrentWeapon == 0 ? mWeaponList.Count : mCurrentWeapon - 1);
+                    ChangeWeapon(mCurrentWeapon == 0 ? mWeaponList.Count - 1 : mCurrentWeapon - 1);
             }
         }
 
@@ -106,6 +109,12 @@ namespace EvilCubes.Core
             mWeaponList[mCurrentWeapon].gameObject.SetActive(false);
             mWeaponList[newWeaponIndex].gameObject.SetActive(true);
             mCurrentWeapon = newWeaponIndex;
+        }
+
+        /////////////////////////////////////////////
+        public void HidePlayer(bool visible)
+        {
+            mPlayerModel.SetActive(!visible);
         }
     }
 }
