@@ -30,7 +30,7 @@ namespace EvilCubes.Core
                 enabled = false;
             }
             //Notify is it is a fps camera
-            bool isFps = mAlternativeCameras[mActiveCamera].GetComponent<FirstPersonCamera>() != null;
+            bool isFps = mAlternativeCameras[mActiveCamera].IsFirstPerson();
             mOnCameraChangedIsFPS.Invoke(isFps);
         }
 
@@ -60,7 +60,7 @@ namespace EvilCubes.Core
                 mAlternativeCameras[mActiveCamera].gameObject.SetActive(true);
 
                 //Notify is it is a fps camera
-                bool isFps = mAlternativeCameras[mActiveCamera].GetComponent<FirstPersonCamera>() != null;
+                bool isFps = mAlternativeCameras[mActiveCamera].IsFirstPerson();
                 mOnCameraChangedIsFPS.Invoke(isFps);
             }
         }

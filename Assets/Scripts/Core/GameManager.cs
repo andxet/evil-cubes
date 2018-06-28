@@ -5,20 +5,18 @@ using UnityEngine;
 
 namespace EvilCubes.Core
 {
-    [RequireComponent(typeof(InputManager))]
     public class GameManager : MonoBehaviour
     {
         //This is a singleton
         static GameManager _instance;
 
-        [Header("Input configurations")]
-        [SerializeField] 
-        float mTurnSensibility = 1.0f;
         [SerializeField]
         PlayerManager mPlayer;
+
         InputManager mInput;
         Crosshair mCrossHair;
         CameraManager mCameraManager;
+        AppConfig mConfig;
 
         /////////////////////////////////////////////
         void Awake()
@@ -33,6 +31,13 @@ namespace EvilCubes.Core
             mInput = GetComponent<InputManager>();
             mCrossHair = GetComponent<Crosshair>();
             mCameraManager = GetComponent<CameraManager>();
+            mConfig = GetComponent<AppConfig>();
+            if(mInput == null || mCrossHair == null || mCameraManager == null || mConfig == null)
+            {
+                Debug.LogError("GameManager: Failed initialization.");
+                enabled = false;
+                return;
+            }
         }
 
         /////////////////////////////////////////////
@@ -44,13 +49,6 @@ namespace EvilCubes.Core
                 enabled = false;
                 return;
             }
-            mPlayer.Init(mInput, mTurnSensibility);
-        }
-
-        /////////////////////////////////////////////
-        void Update()
-        {
-
         }
 
         /////////////////////////////////////////////
@@ -77,6 +75,12 @@ namespace EvilCubes.Core
         public CameraManager GetCameraManager()
         {
             return mCameraManager;
+        }
+
+        /////////////////////////////////////////////
+        public AppConfig GetAppConfig()
+        {
+            return mConfig;
         }
     }
 }

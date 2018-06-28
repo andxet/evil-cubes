@@ -9,12 +9,6 @@ namespace EvilCubes.Core
     public class PlayerManager : MonoBehaviour
     {
         [SerializeField]
-        FirstPersonCamera mFirstPersonCamera;
-        [SerializeField]
-        ThirdPersonCamera mThirdPersonCamera;
-        [SerializeField]
-        Camera mRetroCamera;
-        [SerializeField]
         List<GameObject> mWeaponPrefabList = new List<GameObject>();
         [SerializeField]
         Transform mHandPosition;
@@ -24,14 +18,13 @@ namespace EvilCubes.Core
         List<Weapon.Weapon> mWeaponList = new List<Weapon.Weapon>();
         int mCurrentWeapon = 0;
         InputManager mInput;
-        float mRotationSensibility = 1.0f;
-        bool mInit = false;
+        float mRotationSensibility;
 
         /////////////////////////////////////////////
         void Awake()
         {
             //Check only prefabs internal objects, the other objects will be injected by the GameManager
-            if (mFirstPersonCamera == null || mThirdPersonCamera == null || mRetroCamera == null || mHandPosition == null || mPlayerModel == null)
+            if (mHandPosition == null || mPlayerModel == null)
             {
                 Debug.LogError("PlayerManager: This manager is not correctly initialized.");
                 enabled = false;
@@ -66,22 +59,18 @@ namespace EvilCubes.Core
         }
 
         /////////////////////////////////////////////
-        public void Init(InputManager mgr, float rotationSensibility)
+        void Start()
         {
             if (!enabled)
                 return;
-            mInput = mgr;
-            mRotationSensibility = rotationSensibility;
-            mFirstPersonCamera.Init(mInput, mRotationSensibility);
-            mInit = true;
-            //mTPC.Init(mInput, mRotationSensibility);
+            
+            mInput = GameManager.GetInstance().GetInputManager();
+            mRotationSensibility = GameManager.GetInstance().GetAppConfig().XTurnRotation;
         }
 
         /////////////////////////////////////////////
         void Update()
         {
-            if (!mInit)
-                return;
             if(mInput != null)
             {
                 //Movement
