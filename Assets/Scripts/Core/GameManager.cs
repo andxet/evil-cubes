@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using EvilCubes.UI;
+using UnityEngine.SceneManagement;
+
 namespace EvilCubes.Core
 {
     public class GameManager : MonoBehaviour
@@ -17,6 +20,27 @@ namespace EvilCubes.Core
         Crosshair mCrossHair;
         CameraManager mCameraManager;
         AppConfig mConfig;
+        UIManager mUI;
+
+        /////////////////////////////////////////////
+        public void ExitApplication()
+        {
+            Application.Quit();
+        }
+
+        /////////////////////////////////////////////
+        public void TitleScreen()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 1;
+            SceneManager.LoadScene("TitleScene");
+        }
+
+        /////////////////////////////////////////////
+        public void StartGame()
+        {
+            SceneManager.LoadScene("Game");
+        }
 
         /////////////////////////////////////////////
         void Awake()
@@ -32,11 +56,12 @@ namespace EvilCubes.Core
             mCrossHair = GetComponent<Crosshair>();
             mCameraManager = GetComponent<CameraManager>();
             mConfig = GetComponent<AppConfig>();
-            if(mInput == null || mCrossHair == null || mCameraManager == null || mConfig == null)
+            mUI = GetComponent<UIManager>();
+            if(mInput == null || mCrossHair == null || mCameraManager == null || mConfig == null || mUI == null)
             {
-                Debug.LogError("GameManager: Failed initialization.");
-                enabled = false;
-                return;
+                Debug.LogWarning("GameManager: Some component not found.");
+                //enabled = false;
+                //return;
             }
         }
 
@@ -82,5 +107,13 @@ namespace EvilCubes.Core
         {
             return mConfig;
         }
+
+        /////////////////////////////////////////////
+        public UIManager GetUIManager()
+        {
+            return mUI;
+        }
+
+
     }
 }

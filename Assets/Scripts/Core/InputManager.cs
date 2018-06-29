@@ -22,8 +22,8 @@ namespace EvilCubes.Core
             CHANGE_CAMERA
         }
 
-        Dictionary<Command, bool> currentCommandState = new Dictionary<Command, bool>();
-        Dictionary<MouseState, float> currentMouseState = new Dictionary<MouseState, float>();
+        protected Dictionary<Command, bool> currentCommandState = new Dictionary<Command, bool>();
+        protected Dictionary<MouseState, float> currentMouseState = new Dictionary<MouseState, float>();
 
         /////////////////////////////////////////////
         private void Awake()
@@ -75,13 +75,19 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         public float GetMouseState(MouseState state)
         {
-            return currentMouseState[state];
+            if (Time.timeScale == 0)
+                return 0;
+            else
+                return currentMouseState[state];
         }
 
         /////////////////////////////////////////////
         public bool GetCommandState(Command state)
         {
-            return currentCommandState[state];
+            if (Time.timeScale == 0)
+                return false;
+            else
+                return currentCommandState[state];
         }
     }
 }
