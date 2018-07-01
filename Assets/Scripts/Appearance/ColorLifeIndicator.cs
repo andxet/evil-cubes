@@ -26,25 +26,25 @@ namespace EvilCubes.Appearance
         void Start()
         {
             mLifeComponent = GetComponent<LifeComponent>();
-            mMaterial = GetComponent<Material>();
+            mMaterial = GetComponent<Renderer>().material;
             mInitialColor = mMaterial.color;
-            mMaxLife = mLifeComponent.MaxLife;
-            mCurrentLife = mLifeComponent.Life;
+            mMaxLife = mLifeComponent.GetMaxLife();
+            mCurrentLife = mLifeComponent.mLife;
             UpdateColor();
         }
 
         /////////////////////////////////////////////
         void Update()
         {
-            if (mCurrentLife != mLifeComponent.Life)
+            if (mCurrentLife != mLifeComponent.mLife)
                 UpdateColor();
         }
 
         /////////////////////////////////////////////
         void UpdateColor()
         {
-            mCurrentLife = mLifeComponent.Life;
-            float lifePercentage = mMaxLife / 100.0f * mCurrentLife; 
+            mCurrentLife = mLifeComponent.mLife;
+            float lifePercentage = (float) mCurrentLife / mMaxLife; 
             mMaterial.SetColor("_Color", Color.Lerp(finalColor, mInitialColor, lifePercentage));
 
         }
