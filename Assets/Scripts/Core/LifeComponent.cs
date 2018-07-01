@@ -7,20 +7,23 @@ namespace EvilCubes.Core
 {
     public class LifeComponent : MonoBehaviour
     {
-        //publics
-        public int MaxLife;
-        public int Life{
-            get; private set;
-        }
+        [SerializeField]
+        int MaxLife;
+        public int mLife { get; private set; }
 
-        //privates
         public delegate void DieAction();
         event DieAction dieAction;
 
         /////////////////////////////////////////////
         void Awake()
         {
-            Life = MaxLife;
+            if(MaxLife <= 0)
+            {
+                Debug.LogError("LifeComponent: This component is not correctly initialized.");
+                enabled = false;
+                return;
+            }
+            mLife = MaxLife;
         }
 
         /////////////////////////////////////////////
@@ -28,10 +31,11 @@ namespace EvilCubes.Core
         {
 
         }
+
         /////////////////////////////////////////////
         void Update()
         {
-            if (Life <= 0)
+            if (mLife <= 0)
                 Die();
         }
 
@@ -43,20 +47,29 @@ namespace EvilCubes.Core
                 Debug.LogError("Trying to set a negative damage.");
                 return;
             }
-            Life -= amount;
+            mLife -= amount;
         }
 
         /////////////////////////////////////////////
         public void Die()
         {
+            Debug.Log(name + " is dead");
             if (dieAction != null)
                 dieAction();
+            else
+                gameObject.SetActive(false);
         }
 
         /////////////////////////////////////////////
         public void RegisterDieAction(DieAction call)
         {
             dieAction += call;
+        }
+
+        /////////////////////////////////////////////
+        public int GetMaxLife()
+        {
+            return MaxLife;
         }
     }
 }
