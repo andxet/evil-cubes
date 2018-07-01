@@ -27,13 +27,16 @@ namespace EvilCubes.Enemy
             rotationPins.Add(1, Vector3.Scale(new Vector3( 0.5f,  0.5f, 0.0f), transform.localScale));
             rotationPins.Add(2, Vector3.Scale(new Vector3(-0.5f,  0.5f, 0.0f), transform.localScale));
             rotationPins.Add(3, Vector3.Scale(new Vector3(-0.5f, -0.5f, 0.0f), transform.localScale));
-            currentPin = 0;
-            rotationRemaining = 90;
+            currentPin = 3;
+            rotationRemaining = 0;
         }
 
         /////////////////////////////////////////////
         void Update()
         {
+            if (rotationRemaining <= 0)
+                return;
+            
             //Pivot in world space
             pivot = transform.position + transform.rotation * rotationPins[currentPin];
             //rotate around the axis located at pivot
@@ -42,20 +45,23 @@ namespace EvilCubes.Enemy
                 rotationDelta = rotationRemaining;
             transform.RotateAround(pivot, transform.forward, -rotationDelta);
             rotationRemaining -= rotationDelta;
-
-            if (rotationRemaining <= 0)
-                NextPin();
         }
 
-
         /////////////////////////////////////////////
-        void NextPin()
+        public void Step()
         {
-            //rotationStartedTime = Time.timeSinceLevelLoad;
+            if (rotationRemaining > 0)
+                return;
+            
             rotationRemaining = 90;
             currentPin++;
             currentPin %= 4;
+        }
 
+        /////////////////////////////////////////////
+        public bool IsMoving()
+        {
+            return rotationRemaining > 0;
         }
 
 #if UNITY_EDITOR
