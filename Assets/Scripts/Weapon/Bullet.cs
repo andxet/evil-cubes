@@ -53,8 +53,9 @@ namespace EvilCubes.Weapon
         }
 
         /////////////////////////////////////////////
-        void OnCollisionEnter(Collision col)
+        void OnTriggerEnter(Collider col)
         {
+            Debug.Log("COLLISION BULLET");
             Enemy.Enemy enemy = col.gameObject.GetComponent<Enemy.Enemy>();
             if (enemy != null)
             {
