@@ -114,6 +114,10 @@ namespace EvilCubes.Core
             return mUI;
         }
 
-
+        /////////////////////////////////////////////
+        public PlayerManager GetPlayer()
+        {
+            return mPlayer;
+        }
     }
 }

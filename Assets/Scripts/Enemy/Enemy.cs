@@ -13,6 +13,10 @@ namespace EvilCubes.Enemy
     public abstract class Enemy : MonoBehaviour
     {
         [SerializeField]
+        int mAttack = 10;
+        [SerializeField]
+        float mSpawnProbability = 30;
+        [SerializeField]
         float mDieAnimationLength = 0.5f;
 
         protected LifeComponent mLifeComponent;
@@ -91,6 +95,12 @@ namespace EvilCubes.Enemy
         public void Hit(int damage)
         {
             mLifeComponent.Hit(damage);
+        }
+
+        /////////////////////////////////////////////
+        public float GetSpawnPobability()
+        {
+            return mSpawnProbability;
         }
     }
 }
