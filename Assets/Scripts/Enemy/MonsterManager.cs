@@ -11,16 +11,17 @@ namespace EvilCubes.Enemy
         [SerializeField]
         List<GameObject> mEnemiesPrefabs = new List<GameObject>();
         [SerializeField]
-        Enemy mBossEnemyPrefab;
+        GameObject mBossEnemyPrefab;
         [SerializeField]
         int mNumMonsterToSpawnForBoss = 20;
 
 
         PlayerManager mPlayer;
-        Dictionary<float, Enemy> mEnemyWithProbability = new Dictionary<float, Enemy>();
+        Dictionary<float, GameObject> mEnemyWithProbability = new Dictionary<float, GameObject>();
         int mEnemiesCreated = 0;
-        List<Enemy> mMonsterList = new List<Enemy>();
+        List<Enemy> mEnemyList = new List<Enemy>();
         float mMaxProbability;
+        IEnemySpawner enemySpawner;
 
         /////////////////////////////////////////////
         void Start()
@@ -34,7 +35,9 @@ namespace EvilCubes.Enemy
 
             mPlayer = GameManager.GetInstance().GetPlayer();
             StartCoroutine("SpawnMonsters");
-            float mMaxProbability = 0;
+            mMaxProbability = 0;
+
+            //Populate the dictionary with cumulative probability
             foreach(GameObject go in mEnemiesPrefabs)
             {
                 Enemy enemy = go.GetComponent<Enemy>();
@@ -44,8 +47,16 @@ namespace EvilCubes.Enemy
                     continue;
                 }
                 mMaxProbability += enemy.GetSpawnPobability();
-                mEnemyWithProbability.Add(mMaxProbability, enemy);
+                mEnemyWithProbability.Add(mMaxProbability, go);
             }
+            Enemy en = mBossEnemyPrefab.GetComponent<Enemy>();
+            if (en == null)
+            {
+                Debug.LogWarning("EnemyManager: Boss preffab prefab isn't an enemy!");
+                mBossEnemyPrefab = null;
+            }
+
+            enemySpawner = new EnemySpawnerAroundCirconference();
         }
 
 
@@ -64,7 +75,7 @@ namespace EvilCubes.Enemy
                 //Generate the next after some seconds
                 yield return new WaitForSeconds(Random.Range(0, 5));
             }
-            while (mMonsterList.Count != 0)
+            while (mEnemyList.Count != 0)
                 yield return null;
 
             SpawnBoss();
@@ -73,16 +84,55 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         void SpawnMonster()
         {
-            float p = Random.Range(0, mMaxProbability);
-            int i = 0;
-            //while(p > mEnemyWithProbability.Keys[i])
-                //TODO
+            float probability = Random.Range(0, mMaxProbability);
+            GameObject enemyToSpawn = null;
+            foreach(KeyValuePair<float, GameObject> fe in mEnemyWithProbability)
+            {
+                if (probability <= fe.Key)
+                {
+                    enemyToSpawn = fe.Value;
+                    break;
+                }
+            }
+#if DEBUG
+            if(enemyToSpawn == null)
+            {
+                Debug.LogError("MonsterManager: Failed to choose an enemy to spawn");
+                return;
+            }
+#endif //DEBUG
+
+            SpawnEnemy(enemyToSpawn);
         }  
 
         /////////////////////////////////////////////
         void SpawnBoss()
         {
-            
-        }  
+            if(mBossEnemyPrefab != null)
+            {
+                SpawnEnemy(mBossEnemyPrefab);
+            }
+        }
+
+        /////////////////////////////////////////////
+        void SpawnEnemy(GameObject enemyToInstantiate)
+        {
+            GameObject enemyGameObject = Instantiate(enemyToInstantiate);
+            Enemy enemy = enemyGameObject.GetComponent<Enemy>();
+            enemy.RegisterDieAction(DestroyEnemy);
+            enemy.transform.position = enemySpawner.GetPosition();
+            //CHECK IF VALID
+            //ROTATION
+            mEnemyList.Add(enemy);
+        }
+
+        /////////////////////////////////////////////
+        void DestroyEnemy(Enemy enemy)
+        {
+            if(!mEnemyList.Remove(enemy))
+            {
+                Debug.LogWarning("Trying to remove non registered enemy " + enemy.name);
+            }
+        }
     }
 }

@@ -23,6 +23,9 @@ namespace EvilCubes.Enemy
         protected WalkRotating mMovementComponent;
         protected bool mDied;
 
+        public delegate void EnemyDieEvent(Enemy enemy);
+        EnemyDieEvent mDieAction;
+
         /////////////////////////////////////////////
         protected void Awake()
         {
@@ -72,6 +75,8 @@ namespace EvilCubes.Enemy
             PoolElement poolElement = GetComponent<PoolElement>();
             if (poolElement == null || !poolElement.Destroy())
                 Destroy(gameObject);
+            if (mDieAction != null)
+                mDieAction(this);
         }
 
         /////////////////////////////////////////////
@@ -101,6 +106,12 @@ namespace EvilCubes.Enemy
         public float GetSpawnPobability()
         {
             return mSpawnProbability;
+        }
+
+        /////////////////////////////////////////////
+        public void RegisterDieAction(EnemyDieEvent ev)
+        {
+            mDieAction += ev;
         }
     }
 }
