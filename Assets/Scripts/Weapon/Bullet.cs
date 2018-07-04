@@ -56,15 +56,15 @@ namespace EvilCubes.Weapon
         void OnTriggerEnter(Collider col)
         {
             Debug.Log("COLLISION BULLET");
-            Enemy.Enemy enemy = col.gameObject.GetComponent<Enemy.Enemy>();
+            Enemy.Enemy enemy = col.GetComponent<Enemy.Enemy>();
             if (enemy != null)
             {
                 enemy.Hit(mDamage);
                 Destroy();
             }
-
         }
 
+        /////////////////////////////////////////////
         public float GetValidTime()
         {
             return mValidtime;
