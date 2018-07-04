@@ -5,6 +5,6 @@ using UnityEngine;
 namespace EvilCubes.Enemy{
     public interface IEnemySpawner
     {
-        Vector3 GetPosition();
+        Enemy SpawnEnemy(GameObject enemyPrefab);
     }
 }

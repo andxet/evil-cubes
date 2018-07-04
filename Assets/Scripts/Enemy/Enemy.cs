@@ -116,5 +116,16 @@ namespace EvilCubes.Enemy
         {
             mDieAction += ev;
         }
+
+        /////////////////////////////////////////////
+        public float GetHeight()
+        {
+            //Calculate the height
+            BoxCollider collider = GetComponent<BoxCollider>();
+            if(collider != null)
+                return collider.size.y * transform.localScale.y;
+            //Other collider options goes here
+            return 0;
+        }
     }
 }

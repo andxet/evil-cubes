@@ -14,6 +14,8 @@ namespace EvilCubes.Enemy
         GameObject mBossEnemyPrefab;
         [SerializeField]
         int mNumMonsterToSpawnForBoss = 20;
+        [SerializeField]
+        int mSecondsBeforeStart = 2;
 
 
         PlayerManager mPlayer;
@@ -28,13 +30,12 @@ namespace EvilCubes.Enemy
         {
             if (mEnemiesPrefabs.Count == 0 || mNumMonsterToSpawnForBoss < 0)
             {
-                Debug.LogError("PlayerManager: This manager is not correctly initialized.");
+                Debug.LogError("MonsterManager: This manager is not correctly initialized.");
                 enabled = false;
                 return;
             }
 
             mPlayer = GameManager.GetInstance().GetPlayer();
-            StartCoroutine("SpawnMonsters");
             mMaxProbability = 0;
 
             //Populate the dictionary with cumulative probability
@@ -57,6 +58,8 @@ namespace EvilCubes.Enemy
             }
 
             enemySpawner = new EnemySpawnerAroundCirconference();
+
+            StartCoroutine("SpawnMonsters");
         }
 
 
@@ -69,6 +72,8 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         IEnumerator SpawnMonsters()
         {
+            yield return new WaitForSeconds(mSecondsBeforeStart);
+
             while(mEnemiesCreated < mNumMonsterToSpawnForBoss)
             {
                 SpawnMonster();
@@ -117,12 +122,13 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         void SpawnEnemy(GameObject enemyToInstantiate)
         {
-            GameObject enemyGameObject = Instantiate(enemyToInstantiate);
-            Enemy enemy = enemyGameObject.GetComponent<Enemy>();
+            Enemy enemy = enemySpawner.SpawnEnemy(enemyToInstantiate);
+            if(enemy == null)
+            {
+                Debug.LogWarning("MonsterManager: Trying to spawn a non enemy object");
+                return;
+            }
             enemy.RegisterDieAction(DestroyEnemy);
-            enemy.transform.position = enemySpawner.GetPosition();
-            //CHECK IF VALID
-            //ROTATION
             mEnemyList.Add(enemy);
         }
 
