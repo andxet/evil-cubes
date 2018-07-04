@@ -9,7 +9,7 @@ namespace EvilCubes.Core
     {
         [SerializeField]
         int MaxLife;
-        public int mLife { get; private set; }
+        public int Life { get; private set; }
 
         public delegate void DieAction();
         event DieAction dieAction;
@@ -23,7 +23,7 @@ namespace EvilCubes.Core
                 enabled = false;
                 return;
             }
-            mLife = MaxLife;
+            Life = MaxLife;
         }
 
         /////////////////////////////////////////////
@@ -35,7 +35,7 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         void Update()
         {
-            if (mLife <= 0)
+            if (Life <= 0)
                 Die();
         }
 
@@ -47,7 +47,7 @@ namespace EvilCubes.Core
                 Debug.LogError("Trying to set a negative damage.");
                 return;
             }
-            mLife -= amount;
+            Life -= amount;
         }
 
         /////////////////////////////////////////////
