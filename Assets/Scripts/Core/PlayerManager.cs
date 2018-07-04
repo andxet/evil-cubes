@@ -71,7 +71,7 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         void Update()
         {
-            if(mInput != null)
+            if(Time.timeScale > 0 && mInput != null)
             {
                 //Movement
                 float mouse_x = mInput.GetMouseState(InputManager.MouseState.X_DELTA);

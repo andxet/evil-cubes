@@ -33,8 +33,7 @@ namespace EvilCubes.Core
         {
             if(mInput.GetCommandState(InputManager.Command.PAUSE))
             {
-                mCurrentPaused = !mCurrentPaused;
-                if (mCurrentPaused)
+                if (!mCurrentPaused)
                     Pause();
                 else
                     Unpause();
@@ -47,6 +46,7 @@ namespace EvilCubes.Core
         public void Pause()
         {
             mUI.ShowPause();
+            mCurrentPaused = true;
             Cursor.lockState = CursorLockMode.Confined;
             Time.timeScale = 0;
 
@@ -56,6 +56,7 @@ namespace EvilCubes.Core
         public void Unpause()
         {
             mUI.ExitPause();
+            mCurrentPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
         }

@@ -41,7 +41,7 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         void Start()
         {
-            
+
         }
 
         /////////////////////////////////////////////
@@ -75,19 +75,13 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         public float GetMouseState(MouseState state)
         {
-            if (Time.timeScale == 0)
-                return 0;
-            else
-                return currentMouseState[state];
+            return currentMouseState[state];
         }
 
         /////////////////////////////////////////////
         public bool GetCommandState(Command state)
         {
-            if (Time.timeScale == 0)
-                return false;
-            else
-                return currentCommandState[state];
+            return currentCommandState[state];
         }
     }
 }
