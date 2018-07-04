@@ -859,6 +859,7 @@ GameObject:
   - component: {fileID: 1140376838}
   - component: {fileID: 1140376839}
   - component: {fileID: 1140376840}
+  - component: {fileID: 1140376841}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -927,7 +928,6 @@ MonoBehaviour:
   mAlternativeCameras:
   - {fileID: 1344063431}
   - {fileID: 1834582016}
-  mRearCamera: {fileID: 0}
   mOnCameraChangedIsFPS:
     m_PersistentCalls:
       m_Calls:
@@ -981,6 +981,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGameUI: {fileID: 1320391962}
   mPauseUI: {fileID: 721919110}
+--- !u!114 &1140376841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1140376832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 134d8b9df3ad54be88b2af77f4737ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEnemiesPrefabs:
+  - {fileID: 1309622795399734, guid: 1dc1bf34e925a4256803f358d30a9615, type: 2}
+  mBossEnemyPrefab: {fileID: 1309622795399734, guid: 1dc1bf34e925a4256803f358d30a9615,
+    type: 2}
+  mNumMonsterToSpawnForBoss: 20
+  mSecondsBeforeStart: 2
 --- !u!1 &1183001141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1897,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4962744256202188, guid: 85a56d0166b8642d9bc502dfca068b64, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.07
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4962744256202188, guid: 85a56d0166b8642d9bc502dfca068b64, type: 2}
       propertyPath: m_LocalPosition.z
