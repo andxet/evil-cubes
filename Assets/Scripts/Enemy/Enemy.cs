@@ -127,5 +127,18 @@ namespace EvilCubes.Enemy
             //Other collider options goes here
             return 0;
         }
+
+        /////////////////////////////////////////////
+        void OnTriggerEnter(Collider col)
+        {
+            Debug.Log("Collision enemy");
+            PlayerManager player = col.GetComponent<PlayerManager>();
+            LifeComponent life = col.GetComponent<LifeComponent>();
+            if (player != null && life != null)
+            {
+                life.Hit(mAttack);
+                Hit(mLifeComponent.GetMaxLife());
+            }
+        }
     }
 }

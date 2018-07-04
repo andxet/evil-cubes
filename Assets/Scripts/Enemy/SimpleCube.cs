@@ -37,13 +37,6 @@ namespace EvilCubes.Enemy
         }
 
         /////////////////////////////////////////////
-        public void OnTriggerEnter(Collider other)
-        {
-
-            Debug.Log("COLLISION CUBE");
-        }
-
-        /////////////////////////////////////////////
         protected void Die()
         {
             Debug.Log("die callback child");
