@@ -45,6 +45,8 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         public void Pause()
         {
+            if (GameManager.GetInstance().GameEnded())
+                return;
             mUI.ShowPause();
             mCurrentPaused = true;
             Cursor.lockState = CursorLockMode.Confined;

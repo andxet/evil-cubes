@@ -21,6 +21,7 @@ namespace EvilCubes.Core
         CameraManager mCameraManager;
         AppConfig mConfig;
         UIManager mUI;
+        bool mGameEnded = false;
 
         /////////////////////////////////////////////
         public void ExitApplication()
@@ -74,6 +75,14 @@ namespace EvilCubes.Core
                 enabled = false;
                 return;
             }
+            LifeComponent life = mPlayer.GetComponent<LifeComponent>();
+            if(life == null)
+            {
+                Debug.LogError("GameManager: The player does not have a life component.");
+                enabled = false;
+                return;
+            }
+            life.RegisterDieAction(Lose);
         }
 
         /////////////////////////////////////////////
@@ -115,9 +124,27 @@ namespace EvilCubes.Core
         }
 
         /////////////////////////////////////////////
-        public PlayerManager GetPlayer()
+        public void Win()
         {
-            return mPlayer;
+            mGameEnded = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
+            mUI.Win();
+        }
+
+        /////////////////////////////////////////////
+        public void Lose()
+        {
+            mGameEnded = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
+            mUI.Lose();
+        }
+
+        /////////////////////////////////////////////
+        public bool GameEnded()
+        {
+            return mGameEnded;
         }
     }
 }

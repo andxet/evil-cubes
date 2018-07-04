@@ -11,6 +11,10 @@ namespace EvilCubes.UI
         GameObject mGameUI;
         [SerializeField]
         GameObject mPauseUI;
+        [SerializeField]
+        GameObject mWinUI;
+        [SerializeField]
+        GameObject mLoseUI;
 
         InputManager mInput;
 
@@ -18,7 +22,7 @@ namespace EvilCubes.UI
         void Start()
         {
             mInput = GameManager.GetInstance().GetInputManager();
-            if(mInput == null || mGameUI == null || mPauseUI == null)
+            if(mInput == null || mGameUI == null || mPauseUI == null || mWinUI == null || mLoseUI == null)
             {
                 Debug.LogError("UIManager: This manager is not correctly initialized.");
                 enabled = false;
@@ -46,6 +50,18 @@ namespace EvilCubes.UI
         {
             mGameUI.gameObject.SetActive(true);
             mPauseUI.gameObject.SetActive(false);
+        }
+
+        /////////////////////////////////////////////
+        public void Win()
+        {
+            mWinUI.SetActive(true);
+        }
+
+        /////////////////////////////////////////////
+        public void Lose()
+        {
+            mLoseUI.SetActive(true);
         }
     }
 }
