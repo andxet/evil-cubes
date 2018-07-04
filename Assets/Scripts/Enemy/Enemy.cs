@@ -72,9 +72,9 @@ namespace EvilCubes.Enemy
         protected void Die()
         {
             //If this object has a PoolElement, use the pool, otherwise destroy definitively
-            PoolElement poolElement = GetComponent<PoolElement>();
-            if (poolElement == null || !poolElement.Destroy())
-                Destroy(gameObject);
+            //PoolElement poolElement = GetComponent<PoolElement>();
+            //if (poolElement == null || !poolElement.Destroy())
+            Destroy(gameObject);
             if (mDieAction != null)
                 mDieAction(this);
         }
