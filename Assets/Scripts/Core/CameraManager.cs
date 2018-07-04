@@ -12,8 +12,8 @@ namespace EvilCubes.Core
 
         [SerializeField]
         List<PlayerCamera> mAlternativeCameras = new List<PlayerCamera>();
-        [SerializeField]
-        PlayerCamera mRearCamera;
+        //[SerializeField]
+        //PlayerCamera mRearCamera;
         [SerializeField]
         CameraEvent mOnCameraChangedIsFPS;
 
@@ -24,7 +24,7 @@ namespace EvilCubes.Core
         void Start()
         {
             mInput = GameManager.GetInstance().GetInputManager();
-            if (!mInput || mAlternativeCameras.Count == 0 || mRearCamera == null)
+            if (!mInput || mAlternativeCameras.Count == 0 /*|| mRearCamera == null*/)
             {
                 Debug.LogWarning("CameraManager: Error in manager configuration");
                 enabled = false;
