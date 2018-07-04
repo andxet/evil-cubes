@@ -23,10 +23,10 @@ namespace EvilCubes.Enemy
         void Start()
         {
             //Multiply with local scale to allow a non standard scale
-            rotationPins.Add(0, Vector3.Scale(new Vector3( 0.5f, -0.5f, 0.0f), transform.localScale));
-            rotationPins.Add(1, Vector3.Scale(new Vector3( 0.5f,  0.5f, 0.0f), transform.localScale));
-            rotationPins.Add(2, Vector3.Scale(new Vector3(-0.5f,  0.5f, 0.0f), transform.localScale));
-            rotationPins.Add(3, Vector3.Scale(new Vector3(-0.5f, -0.5f, 0.0f), transform.localScale));
+            rotationPins.Add(0, Vector3.Scale(new Vector3( 0.0f, -0.5f,  0.5f), transform.localScale));
+            rotationPins.Add(1, Vector3.Scale(new Vector3( 0.0f,  0.5f,  0.5f), transform.localScale));
+            rotationPins.Add(2, Vector3.Scale(new Vector3( 0.0f,  0.5f, -0.5f), transform.localScale));
+            rotationPins.Add(3, Vector3.Scale(new Vector3( 0.0f, -0.5f, -0.5f), transform.localScale));
             currentPin = 3;
             rotationRemaining = 0;
         }
@@ -43,7 +43,7 @@ namespace EvilCubes.Enemy
             float rotationDelta = Time.deltaTime * 90 / rotationTime;
             if (rotationDelta > rotationRemaining)
                 rotationDelta = rotationRemaining;
-            transform.RotateAround(pivot, transform.forward, -rotationDelta);
+            transform.RotateAround(pivot, transform.right, rotationDelta);
             rotationRemaining -= rotationDelta;
         }
 
@@ -75,7 +75,7 @@ namespace EvilCubes.Enemy
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward);
             Gizmos.color = Color.gray;
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.Cross(Vector3.up, transform.forward));
+            Gizmos.DrawLine(transform.position, transform.position - Vector3.Cross(Vector3.up, transform.right));
             Gizmos.color = Color.magenta;
             Gizmos.DrawCube(pivot, new Vector3(0.1f, 0.1f, 0.1f));
         }
