@@ -82,6 +82,9 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         IEnumerator DieAnimation()
         {
+            Collider collider = GetComponent<Collider>();
+            if (collider != null)
+                collider.enabled = false;
             Vector3 originalScale = transform.localScale;
             Vector3 destScale = Vector3.zero;
             float elapsedTime = 0;
