@@ -78,11 +78,12 @@ namespace EvilCubes.Core
             LifeComponent life = mPlayer.GetComponent<LifeComponent>();
             if (life == null)
             {
-                Debug.LogError("GameManager: The player does not have a life component.");
-                enabled = false;
-                return;
+                Debug.LogWarning("GameManager: The player does not have a life component.");
+                //enabled = false;
+                //return;
             }
-            life.RegisterDieAction(Lose);
+            else
+                life.RegisterDieAction(Lose);
         }
 
         /////////////////////////////////////////////

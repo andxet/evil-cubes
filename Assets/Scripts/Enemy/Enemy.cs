@@ -134,9 +134,10 @@ namespace EvilCubes.Enemy
             Debug.Log("Collision enemy");
             PlayerManager player = col.GetComponent<PlayerManager>();
             LifeComponent life = col.GetComponent<LifeComponent>();
-            if (player != null && life != null)
+            if (player != null)
             {
-                life.Hit(mAttack);
+                if(life != null)
+                    life.Hit(mAttack);
                 Hit(mLifeComponent.GetMaxLife());
             }
         }

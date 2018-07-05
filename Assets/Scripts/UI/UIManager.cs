@@ -56,12 +56,14 @@ namespace EvilCubes.UI
         public void Win()
         {
             mWinUI.SetActive(true);
+            mGameUI.gameObject.SetActive(false);
         }
 
         /////////////////////////////////////////////
         public void Lose()
         {
             mLoseUI.SetActive(true);
+            mGameUI.gameObject.SetActive(false);
         }
     }
 }
