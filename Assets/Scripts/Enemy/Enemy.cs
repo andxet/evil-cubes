@@ -8,8 +8,6 @@ using EvilCubes.Util;
 
 namespace EvilCubes.Enemy
 {
-    [RequireComponent(typeof(LifeComponent))]
-    [RequireComponent(typeof(WalkRotating))]
     public abstract class Enemy : MonoBehaviour
     {
         [SerializeField]
@@ -18,8 +16,9 @@ namespace EvilCubes.Enemy
         float mSpawnProbability = 30;
         [SerializeField]
         float mDieAnimationLength = 0.5f;
-
+        [SerializeField]
         protected LifeComponent mLifeComponent;
+        [SerializeField]
         protected WalkRotating mMovementComponent;
         protected bool mDied;
 
@@ -29,14 +28,12 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         protected void Awake()
         {
-            if (mDieAnimationLength <= 0)
+            if (mDieAnimationLength <= 0 || mLifeComponent == null || mMovementComponent == null)
             {
                 Debug.LogError("Enemy: This component is not correctly initialized.");
                 enabled = false;
                 return;
             }
-            mLifeComponent = GetComponent<LifeComponent>();
-            mMovementComponent = GetComponent<WalkRotating>();
             mDied = false;
         }
 
