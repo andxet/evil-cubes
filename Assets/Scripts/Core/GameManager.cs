@@ -58,7 +58,7 @@ namespace EvilCubes.Core
             mCameraManager = GetComponent<CameraManager>();
             mConfig = GetComponent<AppConfig>();
             mUI = GetComponent<UIManager>();
-            if(mInput == null || mCrossHair == null || mCameraManager == null || mConfig == null || mUI == null)
+            if (mInput == null || mCrossHair == null || mCameraManager == null || mConfig == null || mUI == null)
             {
                 Debug.LogWarning("GameManager: Some component not found.");
                 //enabled = false;
@@ -69,14 +69,14 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         void Start()
         {
-            if(mPlayer == null)
+            if (mPlayer == null)
             {
                 Debug.LogError("GameManager: This manager is not correctly initialized.");
                 enabled = false;
                 return;
             }
             LifeComponent life = mPlayer.GetComponent<LifeComponent>();
-            if(life == null)
+            if (life == null)
             {
                 Debug.LogError("GameManager: The player does not have a life component.");
                 enabled = false;
@@ -145,6 +145,12 @@ namespace EvilCubes.Core
         public bool GameEnded()
         {
             return mGameEnded;
+        }
+
+        /////////////////////////////////////////////
+        public PlayerManager GetPlayer()
+        {
+            return mPlayer;
         }
     }
 }
