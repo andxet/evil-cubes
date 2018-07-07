@@ -481,7 +481,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 274875450}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +805,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 418112169}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 420548971}
   - component: {fileID: 420548974}
   - component: {fileID: 420548973}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1559,6 +1559,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cc54fb41cb742599d8668e6da896ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mLayerMask:
+    serializedVersion: 2
+    m_Bits: 4293918715
 --- !u!114 &1140376837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,7 +1659,7 @@ GameObject:
   - component: {fileID: 1183001145}
   - component: {fileID: 1183001142}
   - component: {fileID: 1183001144}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: RearCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2101,7 +2104,7 @@ GameObject:
   - component: {fileID: 1344063429}
   - component: {fileID: 1344063428}
   - component: {fileID: 1344063431}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: FirstPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2409,7 +2412,7 @@ GameObject:
   - component: {fileID: 1677616409}
   - component: {fileID: 1677616408}
   - component: {fileID: 1677616407}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2501,7 +2504,7 @@ GameObject:
   - component: {fileID: 1688479993}
   - component: {fileID: 1688479994}
   - component: {fileID: 1688479996}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2537,7 +2540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b74bb1a20694fa4941f711f0c170c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxLife: 10
+  MaxLife: 100000
 --- !u!136 &1688479994
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2547,7 +2550,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25340068
+  m_Radius: 0.26
   m_Height: 2.0233653
   m_Direction: 1
   m_Center: {x: 0, y: -0.08632076, z: 0}
@@ -2717,7 +2720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834582015}
   - component: {fileID: 1834582016}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2833,7 +2836,7 @@ GameObject:
   - component: {fileID: 1885513039}
   - component: {fileID: 1885513038}
   - component: {fileID: 1885513037}
-  m_Layer: 2
+  m_Layer: 22
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

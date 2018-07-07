@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33597821070326480}
   - component: {fileID: 23607758591317324}
   - component: {fileID: 135741960087509096}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4367220717826130}
   - component: {fileID: 114007532170532922}
   - component: {fileID: 54317414584068962}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SniperBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

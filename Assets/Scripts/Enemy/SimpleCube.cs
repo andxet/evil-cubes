@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using EvilCubes.Core;
 using UnityEngine;
 
 namespace EvilCubes.Enemy
@@ -7,7 +8,7 @@ namespace EvilCubes.Enemy
     public class SimpleCube : Enemy
     {
         [SerializeField]
-        StepChecker mStepChecker;
+        PositionChecker mStepChecker;
 
         enum State
         {
@@ -16,6 +17,7 @@ namespace EvilCubes.Enemy
             MOVING
         };
         State mCurrentState;
+        GameObject mPlayer;
 
         /////////////////////////////////////////////
         new void Start()
@@ -29,33 +31,40 @@ namespace EvilCubes.Enemy
             }
             mCurrentState = State.CALCULATE_MOVE;
             mStepChecker.RegisterStepAllowedAction(StartStep);
+            //This could be injected in other ways...
+            mPlayer = GameManager.GetInstance().GetPlayer().gameObject;
         }
 
         /////////////////////////////////////////////
         void Update()
         {
-            switch(mCurrentState)
+            switch (mCurrentState)
             {
                 case State.CALCULATE_MOVE:
-                    mStepChecker.CheckStep();
-                    mCurrentState = State.CHECK_SPACE_FOR_STEP;
+                    if (IsNearPlayer())
+                        StartStep();
+                    else
+                        CheckStep();
                     break;
 
                 case State.CHECK_SPACE_FOR_STEP:
                     break;
-                    
+
                 case State.MOVING:
                     if (!mMovementComponent.IsMoving())
                     {
-                        if(mMovementComponent.transform.IsChildOf(transform))
-                        {
-                            transform.position = mMovementComponent.transform.position;
-                            mMovementComponent.transform.localPosition = Vector3.zero;
-                            mCurrentState = State.CALCULATE_MOVE;
-                        }
+                        mCurrentState = State.CALCULATE_MOVE;
                     }
                     break;
             }
+        }
+
+        /////////////////////////////////////////////
+        protected void CheckStep()
+        {
+            mCurrentState = State.CHECK_SPACE_FOR_STEP;
+            Vector3 position = transform.position + mMovementComponent.GetDirectionVector();
+            mStepChecker.CheckPosition(position, transform.localScale, transform.rotation);
         }
 
         /////////////////////////////////////////////
@@ -70,6 +79,18 @@ namespace EvilCubes.Enemy
         {
             Debug.Log("die callback child");
             base.Die();
+        }
+        
+        /////////////////////////////////////////////
+        Vector3 NextStepPosition()
+        {
+            return transform.position + mMovementComponent.GetDirectionVector();
+        }
+
+        /////////////////////////////////////////////
+        bool IsNearPlayer()
+        {
+            return PositionChecker.CheckArea(NextStepPosition(), transform.localScale, transform.rotation, 1 << LayerMask.NameToLayer("Player"));
         }
     }
 }

@@ -64,6 +64,12 @@ namespace EvilCubes.Enemy
             return rotationRemaining > 0;
         }
 
+        /////////////////////////////////////////////
+        public Vector3 GetDirectionVector()
+        {
+            return - Vector3.Cross(Vector3.up, transform.right);
+        }
+
 #if UNITY_EDITOR
         /////////////////////////////////////////////
         void OnDrawGizmos()

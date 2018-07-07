@@ -4,6 +4,8 @@ using EvilCubes.Core;
 using UnityEngine;
 
 public class Crosshair : MonoBehaviour {
+    [SerializeField]
+    LayerMask mLayerMask;
     [HideInInspector]
     public Vector3 HitPoint { get; private set; }
 
@@ -29,9 +31,23 @@ public class Crosshair : MonoBehaviour {
             return;
         }
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, mLayerMask))
             HitPoint = hit.point;
         else
             HitPoint = cam.transform.forward * 100;
 	}
+
+    /////////////////////////////////////////////
+    /*void OnDrawGizmos()
+    {
+        PlayerCamera cam = mCameraManager.GetCurrentActiveCamera();
+        if (cam == null)
+        {
+            return;
+        }
+        RaycastHit hit;
+        Gizmos.color = Color.blue;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, mLayerMask))
+            Gizmos.DrawCube(hit.point, new Vector3(0.1f,0.1f,0.1f));
+    }*/
 }

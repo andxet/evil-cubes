@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23607758591317324}
   - component: {fileID: 65274939526441618}
   - component: {fileID: 114166543114934502}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4367220717826130}
   - component: {fileID: 114007532170532922}
   - component: {fileID: 54951387558771848}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: ShotgunBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
