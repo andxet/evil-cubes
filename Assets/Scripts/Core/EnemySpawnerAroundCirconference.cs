@@ -9,7 +9,6 @@ namespace EvilCubes.Enemy
     //Spawn and init an enemy
     public class EnemySpawnerAroundCirconference : IEnemySpawner
     {
-        [SerializeField]
         int mMaxTries = 5;
 
         readonly float DISTANCE = 10;

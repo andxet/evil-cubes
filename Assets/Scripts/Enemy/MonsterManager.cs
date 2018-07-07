@@ -67,13 +67,6 @@ namespace EvilCubes.Enemy
             StartCoroutine("SpawnMonsters");
         }
 
-
-        /////////////////////////////////////////////
-        void Update()
-        {
-
-        }
-
         /////////////////////////////////////////////
         IEnumerator SpawnMonsters()
         {

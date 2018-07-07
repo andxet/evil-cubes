@@ -36,18 +36,4 @@ public class Crosshair : MonoBehaviour {
         else
             HitPoint = cam.transform.forward * 100;
 	}
-
-    /////////////////////////////////////////////
-    /*void OnDrawGizmos()
-    {
-        PlayerCamera cam = mCameraManager.GetCurrentActiveCamera();
-        if (cam == null)
-        {
-            return;
-        }
-        RaycastHit hit;
-        Gizmos.color = Color.blue;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, mLayerMask))
-            Gizmos.DrawCube(hit.point, new Vector3(0.1f,0.1f,0.1f));
-    }*/
 }
