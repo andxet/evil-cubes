@@ -20,6 +20,18 @@ namespace EvilCubes.Enemy
         protected LifeComponent mLifeComponent;
         [SerializeField]
         protected WalkRotating mMovementComponent;
+        [SerializeField]
+        protected PositionChecker mStepChecker;
+
+        enum State
+        {
+            CALCULATE_MOVE,
+            CHECK_SPACE_FOR_STEP,
+            CHILD_LOGIC,
+            MOVING
+        };
+        State mCurrentState;
+
         protected bool mDied;
 
         public delegate void EnemyDieEvent(Enemy enemy);
@@ -41,14 +53,42 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         protected void Start()
         {
+            if (mStepChecker == null)
+            {
+                Debug.LogError("SimpleCube: This component is not correctly initialized.");
+                enabled = false;
+                return;
+            }
+
             mLifeComponent.RegisterDieAction(StartDie);
+            mCurrentState = State.CALCULATE_MOVE;
+            mStepChecker.RegisterStepAllowedAction(StartStep);
         }
 
         /////////////////////////////////////////////
         void Update()
         {
+            switch (mCurrentState)
+            {
+                case State.CALCULATE_MOVE:
+                    CalculateMove();
+                    break;
+                case State.CHILD_LOGIC:
+                    break;
+                case State.CHECK_SPACE_FOR_STEP:
+                    break;
 
+                case State.MOVING:
+                    if (!mMovementComponent.IsMoving())
+                    {
+                        mCurrentState = State.CALCULATE_MOVE;
+                    }
+                    break;
+            }
         }
+
+        /////////////////////////////////////////////
+        protected abstract void CalculateMove();
 
         /////////////////////////////////////////////
         protected void StartDie()
@@ -137,6 +177,33 @@ namespace EvilCubes.Enemy
                     life.Hit(mAttack);
                 Hit(mLifeComponent.GetMaxLife());
             }
+        }
+
+        /////////////////////////////////////////////
+        protected void CheckIfStepIsPossible()
+        {
+            mCurrentState = State.CHECK_SPACE_FOR_STEP;
+            Vector3 position = transform.position + mMovementComponent.GetDirectionVector();
+            mStepChecker.CheckPosition(position, transform.localScale, transform.rotation);
+        }
+
+        /////////////////////////////////////////////
+        protected void StartStep()
+        {
+            mMovementComponent.Step();
+            mCurrentState = State.MOVING;
+        }
+
+        /////////////////////////////////////////////
+        protected Vector3 NextStepPosition()
+        {
+            return transform.position + mMovementComponent.GetDirectionVector();
+        }
+
+        /////////////////////////////////////////////
+        protected bool IsNearPlayer()
+        {
+            return PositionChecker.CheckArea(NextStepPosition(), transform.localScale, transform.rotation, 1 << LayerMask.NameToLayer("Player"));
         }
     }
 }

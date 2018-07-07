@@ -28,6 +28,9 @@ namespace EvilCubes.Enemy
         int mEnemiesCreated = 0;
         List<Enemy> mEnemyList = new List<Enemy>();
         float mMaxProbability;
+
+        public delegate void WinAction();
+        WinAction mWinAction;
         IEnemySpawner enemySpawner;
 
         /////////////////////////////////////////////
@@ -76,19 +79,25 @@ namespace EvilCubes.Enemy
             {
                 //If not in pause
                 yield return new WaitUntil(() => Time.timeScale > 0);
-                if (SpawnMonster())
+                if (ChooseEnemyAndSpawn())
                     mEnemiesCreated++;
-                //Generate the next after some seconds
+                //Generate the next enemy after some seconds
                 yield return new WaitForSeconds(Random.Range(minumumSecondsBetweenSpawn, maximumSecondsBetweenSpawn));
             }
-            while (mEnemyList.Count != 0)
-                yield return null;
+
+            yield return new WaitUntil(() => mEnemyList.Count == 0);
 
             SpawnBoss();
+
+            if (mWinAction != null)
+            {
+                yield return new WaitUntil(() => mEnemyList.Count == 0);
+                mWinAction();
+            }
         }
 
         /////////////////////////////////////////////
-        bool SpawnMonster()
+        bool ChooseEnemyAndSpawn()
         {
             float probability = Random.Range(0, mMaxProbability);
             GameObject enemyToSpawn = null;
@@ -132,6 +141,12 @@ namespace EvilCubes.Enemy
             enemy.RegisterDieAction(DestroyEnemy);
             mEnemyList.Add(enemy);
             return true;
+        }
+
+        /////////////////////////////////////////////
+        public void RegisterWinAction(WinAction action)
+        {
+            mWinAction = action;
         }
 
         /////////////////////////////////////////////

@@ -47,9 +47,19 @@ namespace EvilCubes.Enemy
             StartCoroutine(coroutine);
         }
 
+#if DEBUG
+        Vector3 mPosition;
+        Vector3 mScale;
+        Quaternion mRotation;
+#endif
+
         /////////////////////////////////////////////
         IEnumerator CheckPositionCoroutine(Vector3 position, Vector3 scale, Quaternion rotation)
         {
+            mPosition = position;
+            mScale = scale;
+            mRotation = rotation;
+
             //this not work when the rotation side is not a square
             //The collider scale must be Vector3.one
             mTestObject.SetActive(false);
@@ -70,7 +80,7 @@ namespace EvilCubes.Enemy
 
             if (mColliderToIgnore != null)
                 mColliderToIgnore.enabled = true;
-            
+
             //We take our space
             mTestObject.transform.position = position;
             mTestObject.transform.rotation = rotation;
@@ -87,5 +97,13 @@ namespace EvilCubes.Enemy
         {
             return Physics.CheckBox(position, scale, rotation, layer);
         }
+
+#if DEBUG
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(mPosition, mScale);
+        }
+#endif
     }
 }
