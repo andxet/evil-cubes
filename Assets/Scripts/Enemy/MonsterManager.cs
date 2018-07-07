@@ -16,6 +16,11 @@ namespace EvilCubes.Enemy
         int mNumMonsterToSpawnForBoss = 20;
         [SerializeField]
         int mSecondsBeforeStart = 2;
+        [SerializeField]
+        int minumumSecondsBetweenSpawn = 0;
+        [SerializeField]
+        int maximumSecondsBetweenSpawn = 5;
+
 
 
         PlayerManager mPlayer;
@@ -39,10 +44,10 @@ namespace EvilCubes.Enemy
             mMaxProbability = 0;
 
             //Populate the dictionary with cumulative probability
-            foreach(GameObject go in mEnemiesPrefabs)
+            foreach (GameObject go in mEnemiesPrefabs)
             {
                 Enemy enemy = go.GetComponent<Enemy>();
-                if(enemy == null)
+                if (enemy == null)
                 {
                     Debug.LogWarning("EnemyManager: Added a prefab that isn't an enemy!");
                     continue;
@@ -74,11 +79,14 @@ namespace EvilCubes.Enemy
         {
             yield return new WaitForSeconds(mSecondsBeforeStart);
 
-            while(mEnemiesCreated < mNumMonsterToSpawnForBoss)
+            while (mEnemiesCreated < mNumMonsterToSpawnForBoss)
             {
-                SpawnMonster();
+                //If not in pause
+                yield return new WaitUntil(() => Time.timeScale > 0);
+                if (SpawnMonster())
+                    mEnemiesCreated++;
                 //Generate the next after some seconds
-                yield return new WaitForSeconds(Random.Range(0, 5));
+                yield return new WaitForSeconds(Random.Range(minumumSecondsBetweenSpawn, maximumSecondsBetweenSpawn));
             }
             while (mEnemyList.Count != 0)
                 yield return null;
@@ -87,11 +95,11 @@ namespace EvilCubes.Enemy
         }
 
         /////////////////////////////////////////////
-        void SpawnMonster()
+        bool SpawnMonster()
         {
             float probability = Random.Range(0, mMaxProbability);
             GameObject enemyToSpawn = null;
-            foreach(KeyValuePair<float, GameObject> fe in mEnemyWithProbability)
+            foreach (KeyValuePair<float, GameObject> fe in mEnemyWithProbability)
             {
                 if (probability <= fe.Key)
                 {
@@ -100,42 +108,43 @@ namespace EvilCubes.Enemy
                 }
             }
 #if DEBUG
-            if(enemyToSpawn == null)
+            if (enemyToSpawn == null)
             {
                 Debug.LogError("MonsterManager: Failed to choose an enemy to spawn");
-                return;
+                return false;
             }
 #endif //DEBUG
 
-            SpawnEnemy(enemyToSpawn);
-        }  
+            return SpawnEnemy(enemyToSpawn);
+        }
 
         /////////////////////////////////////////////
         void SpawnBoss()
         {
-            if(mBossEnemyPrefab != null)
+            if (mBossEnemyPrefab != null)
             {
                 SpawnEnemy(mBossEnemyPrefab);
             }
         }
 
         /////////////////////////////////////////////
-        void SpawnEnemy(GameObject enemyToInstantiate)
+        bool SpawnEnemy(GameObject enemyToInstantiate)
         {
             Enemy enemy = enemySpawner.SpawnEnemy(enemyToInstantiate);
-            if(enemy == null)
+            if (enemy == null)
             {
-                Debug.LogWarning("MonsterManager: Trying to spawn a non enemy object");
-                return;
+                Debug.LogWarning("MonsterManager: Failed to spawn enemy");
+                return false;
             }
             enemy.RegisterDieAction(DestroyEnemy);
             mEnemyList.Add(enemy);
+            return true;
         }
 
         /////////////////////////////////////////////
         void DestroyEnemy(Enemy enemy)
         {
-            if(!mEnemyList.Remove(enemy))
+            if (!mEnemyList.Remove(enemy))
             {
                 Debug.LogWarning("Trying to remove non registered enemy " + enemy.name);
             }

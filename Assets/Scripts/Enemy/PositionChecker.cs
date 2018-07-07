@@ -28,6 +28,7 @@ namespace EvilCubes.Enemy
             mColliderToIgnore = GetComponent<Collider>();
         }
 
+        /////////////////////////////////////////////
         private void OnDestroy()
         {
             GameObject.Destroy(mTestObject);
@@ -81,6 +82,7 @@ namespace EvilCubes.Enemy
         }
 
 
+        /////////////////////////////////////////////
         public static bool CheckArea(Vector3 position, Vector3 scale, Quaternion rotation, LayerMask layer)
         {
             return Physics.CheckBox(position, scale, rotation, layer);

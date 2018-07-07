@@ -17,7 +17,6 @@ namespace EvilCubes.Enemy
             MOVING
         };
         State mCurrentState;
-        GameObject mPlayer;
 
         /////////////////////////////////////////////
         new void Start()
@@ -31,8 +30,6 @@ namespace EvilCubes.Enemy
             }
             mCurrentState = State.CALCULATE_MOVE;
             mStepChecker.RegisterStepAllowedAction(StartStep);
-            //This could be injected in other ways...
-            mPlayer = GameManager.GetInstance().GetPlayer().gameObject;
         }
 
         /////////////////////////////////////////////

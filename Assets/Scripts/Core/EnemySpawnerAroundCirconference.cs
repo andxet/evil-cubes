@@ -9,6 +9,9 @@ namespace EvilCubes.Enemy
     //Spawn and init an enemy
     public class EnemySpawnerAroundCirconference : IEnemySpawner
     {
+        [SerializeField]
+        int mMaxTries = 5;
+
         readonly float DISTANCE = 10;
         GameObject mPlayerObject;
 
@@ -27,7 +30,7 @@ namespace EvilCubes.Enemy
             //Instantiate, set position and rotation
             GameObject enemyGameObject = Object.Instantiate(enemyPrefab);
             Enemy enemy = enemyGameObject.GetComponent<Enemy>();
-            if(enemy == null)
+            if (enemy == null)
             {
                 Object.Destroy(enemyGameObject);
                 return null;
@@ -35,14 +38,32 @@ namespace EvilCubes.Enemy
 
             //Set position
             Vector3 position = Vector3.zero;
-            GetPosition(ref position);
-            position.y = enemy.GetHeight() / 2;
-            enemy.transform.position = position;
 
-            //Set rotation
-            Vector3 lookatPosition = mPlayerObject.transform.position;
-            lookatPosition.y = enemy.transform.position.y;
-            enemy.transform.LookAt(mPlayerObject.transform.position);
+            int tries = 0;
+            bool positionUnvailable;
+            enemyGameObject.SetActive(false);
+            do
+            {
+                GetPosition(ref position);
+                position.y = enemy.GetHeight() / 2;
+                enemy.transform.position = position;
+
+                //Set rotation
+                Vector3 lookatPosition = mPlayerObject.transform.position;
+                lookatPosition.y = enemy.transform.position.y;
+                enemy.transform.LookAt(mPlayerObject.transform.position);
+                tries++;
+                positionUnvailable = PositionChecker.CheckArea(enemy.transform.position, enemy.transform.localScale, enemy.transform.rotation, 1 << LayerMask.NameToLayer("Enemy"));
+            } while (positionUnvailable && tries < mMaxTries);
+
+            //Max attempts reached
+            if(positionUnvailable)
+            {
+                GameObject.Destroy(enemy);
+                return null;
+            }
+
+            enemyGameObject.SetActive(true);
             return enemy;
         }
 

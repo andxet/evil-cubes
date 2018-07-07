@@ -1648,6 +1648,8 @@ MonoBehaviour:
     type: 2}
   mNumMonsterToSpawnForBoss: 20
   mSecondsBeforeStart: 2
+  minumumSecondsBetweenSpawn: 1
+  maximumSecondsBetweenSpawn: 5
 --- !u!1 &1183001141
 GameObject:
   m_ObjectHideFlags: 0
