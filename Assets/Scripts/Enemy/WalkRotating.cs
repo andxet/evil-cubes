@@ -22,6 +22,11 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         void Start()
         {
+            if(transform.localScale.y != transform.localScale.z)
+            {
+                Debug.LogWarning("WalkRotating: this component doesn't work if the y scale and z scale are not equals.");
+            }
+
             //Multiply with local scale to allow a non standard scale
             rotationPins.Add(0, Vector3.Scale(new Vector3( 0.0f, -0.5f,  0.5f), transform.localScale));
             rotationPins.Add(1, Vector3.Scale(new Vector3( 0.0f,  0.5f,  0.5f), transform.localScale));
@@ -67,7 +72,8 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         public Vector3 GetDirectionVector()
         {
-            return - Vector3.Cross(Vector3.up, transform.right);
+            //Same scale for z and y. Vector3.one for the collider
+            return - Vector3.Cross(Vector3.up, transform.right) * transform.localScale.z;
         }
 
 #if UNITY_EDITOR
