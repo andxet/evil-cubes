@@ -4,19 +4,34 @@ using UnityEngine;
 
 namespace EvilCubes.Enemy
 {
-    public class TitanCube : MonoBehaviour
+    public class TitanCube : Enemy
     {
+        [SerializeField]
+        float mRestTime = 1.5f;
 
-        /////////////////////////////////////////////
-        void Start()
-        {
-
+        enum State{
+            END_STEP,
+            REST
         }
+        State mCurrentState = State.REST;
+        float mEndRest = 0;
 
-        /////////////////////////////////////////////
-        void Update()
+        protected override void CalculateMove()
         {
-
+            switch(mCurrentState)
+            {
+                case State.END_STEP:
+                    mEndRest = Time.timeSinceLevelLoad + mRestTime;
+                    mCurrentState = State.REST;
+                    break;
+                case State.REST:
+                    if(Time.timeSinceLevelLoad > mEndRest)
+                    {
+                        mCurrentState = State.END_STEP;
+                        DoStepWhenPossible();
+                    }
+                    break;
+            }
         }
     }
 }
