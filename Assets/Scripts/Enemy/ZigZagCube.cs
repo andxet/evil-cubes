@@ -149,11 +149,12 @@ namespace EvilCubes.Enemy
             Quaternion destRotation = rotation * startRotation;
             Debug.Log("Starting rotation coroutine");
             float progress = 0;
+            float startTime = Time.timeSinceLevelLoad;
             while (progress < 1)
             {
                 transform.rotation = Quaternion.Lerp(startRotation, destRotation, progress);
                 yield return null;
-                progress += Time.deltaTime;
+                progress = (Time.timeSinceLevelLoad - startTime) / mRotationVelocity;
             }
             transform.rotation = destRotation;
 
