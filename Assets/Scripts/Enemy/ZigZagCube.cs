@@ -40,7 +40,7 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         protected override void CalculateMove()
         {
-            
+
             if (!mIsRotating)
             {
                 if (IsNearPlayer())
@@ -71,15 +71,13 @@ namespace EvilCubes.Enemy
                                 break;
                             case Direction.DIRECTION_LEFT:
                                 currentDirection = Direction.DIRECTION_FORWARD;
-                                //LookAtDestination();
-                                TurnRight();
+                                LookAtDestination();
                                 mCurrentTurnProbability = mTurnProbability;
                                 break;
                             case Direction.DIRECTION_RIGHT:
                                 //Turn again to forward
                                 currentDirection = Direction.DIRECTION_FORWARD;
-                                //LookAtDestination();
-                                TurnLeft();
+                                LookAtDestination();
                                 mCurrentTurnProbability = mTurnProbability;
                                 break;
                         }
@@ -99,43 +97,52 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         void LookAtDestination()
         {
-            mIsRotating = true;
-            //Rotate(//magic);
+            Quaternion rotation = new Quaternion();
+            Vector3 from = mMovementComponent.GetDirectionVector();
+            Vector3 to = mDestination - transform.position;
+            to.Normalize();
+            to.y = from.y;
+            rotation.SetFromToRotation(from, to);
+            StartRotationCoroutine(rotation);
         }
 
         /////////////////////////////////////////////
         void TurnLeft()
         {
-            mIsRotating = true;
-            IEnumerator rotationCoroutine = Rotate(-90);
-            StartCoroutine(rotationCoroutine);
+            Quaternion rotation = Quaternion.AngleAxis(-90, Vector3.up);
+            StartRotationCoroutine(rotation);
         }
 
         /////////////////////////////////////////////
         void TurnRight()
         {
-            mIsRotating = true;
-            IEnumerator rotationCoroutine = Rotate(90);
+            Quaternion rotation = Quaternion.AngleAxis(90, Vector3.up);
+            StartRotationCoroutine(rotation);
+        }
+
+        /////////////////////////////////////////////
+        void StartRotationCoroutine(Quaternion rotation)
+        {
+            IEnumerator rotationCoroutine = Rotate(rotation);
             StartCoroutine(rotationCoroutine);
         }
 
         /////////////////////////////////////////////
-        IEnumerator Rotate(float degrees)
+        IEnumerator Rotate(Quaternion rotation)
         {
+            mIsRotating = true;
+
+            Quaternion startRotation = transform.rotation;
+            Quaternion destRotation = rotation * startRotation;
             Debug.Log("Starting rotation coroutine");
-            float sign = Mathf.Sign(degrees);
-            degrees = Mathf.Abs(degrees);
-            do
+            float progress = 0;
+            while (progress < 1)
             {
-                float deltaRotation = 90 / mRotationVelocity * Time.deltaTime;
-                if (deltaRotation > degrees)
-                    deltaRotation = degrees;
-                transform.Rotate(Vector3.up, sign * deltaRotation, Space.World);
-                degrees -= deltaRotation;
-                Debug.Log("remaining degrees: " + degrees);
-                if (degrees > 0)
-                    yield return null;
-            } while (degrees > 0);
+                transform.rotation = Quaternion.Lerp(startRotation, destRotation, progress);
+                yield return null;
+                progress += Time.deltaTime;
+            }
+            transform.rotation = destRotation;
 
             mIsRotating = false;
         }
