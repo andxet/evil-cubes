@@ -1645,10 +1645,11 @@ MonoBehaviour:
   mEnemiesPrefabs:
   - {fileID: 1309622795399734, guid: 1dc1bf34e925a4256803f358d30a9615, type: 2}
   - {fileID: 1309622795399734, guid: 49eeebcdf45a24f3c8e924ad54da83bb, type: 2}
-  mBossEnemyPrefab: {fileID: 1309622795399734, guid: 1dc1bf34e925a4256803f358d30a9615,
+  mBossEnemyPrefab: {fileID: 1309622795399734, guid: 52c13a992fd01420db9de854fd32e01b,
     type: 2}
   mNumMonsterToSpawnForBoss: 20
   mSecondsBeforeStart: 2
+  mSecondsBeforeBoss: 2
   minumumSecondsBetweenSpawn: 1
   maximumSecondsBetweenSpawn: 5
 --- !u!1 &1183001141
