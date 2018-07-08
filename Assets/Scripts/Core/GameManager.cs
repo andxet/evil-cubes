@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using EvilCubes.UI;
-using UnityEngine.SceneManagement;
+using EvilCubes.Enemy;
 
 namespace EvilCubes.Core
 {
@@ -75,15 +76,24 @@ namespace EvilCubes.Core
                 enabled = false;
                 return;
             }
-            LifeComponent life = mPlayer.GetComponent<LifeComponent>();
-            if (life == null)
+            LifeComponent playerLife = mPlayer.GetComponent<LifeComponent>();
+            if (playerLife == null)
             {
                 Debug.LogWarning("GameManager: The player does not have a life component.");
                 //enabled = false;
                 //return;
             }
             else
-                life.RegisterDieAction(Lose);
+                playerLife.RegisterDieAction(Lose);
+            MonsterManager monsterManager = GetComponent<MonsterManager>();
+            if (monsterManager == null)
+            {
+                Debug.LogWarning("GameManager: Can't set the win callback on monster manager");
+                //enabled = false;
+                //return;
+            }
+            else
+                monsterManager.RegisterWinAction(Win);
         }
 
         /////////////////////////////////////////////
