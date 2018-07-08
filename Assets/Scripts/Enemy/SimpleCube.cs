@@ -12,7 +12,7 @@ namespace EvilCubes.Enemy
             if (IsNearPlayer())
                 StartStep();
             else
-                CheckIfStepIsPossible();
+                DoStepWhenPossible();
         }
     }
 }

@@ -180,10 +180,10 @@ namespace EvilCubes.Enemy
         }
 
         /////////////////////////////////////////////
-        protected void CheckIfStepIsPossible()
+        protected void DoStepWhenPossible()
         {
             mCurrentState = State.CHECK_SPACE_FOR_STEP;
-            Vector3 position = transform.position + mMovementComponent.GetDirectionVector();
+            Vector3 position = NextStepPosition();
             mStepChecker.CheckPosition(position, transform.localScale, transform.rotation);
         }
 
@@ -195,7 +195,7 @@ namespace EvilCubes.Enemy
         }
 
         /////////////////////////////////////////////
-        protected Vector3 NextStepPosition()
+        protected virtual Vector3 NextStepPosition()
         {
             return transform.position + mMovementComponent.GetDirectionVector();
         }
