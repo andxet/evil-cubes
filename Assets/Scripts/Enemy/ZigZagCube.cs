@@ -14,33 +14,37 @@ namespace EvilCubes.Enemy
         [Tooltip("Time to rotate 90 degrees")]
         float mRotationVelocity = 0.6f;
         [SerializeField]
-        float mTurnProbability = 0.3f;
+        int mMaxConsecutiveSteps = 5;
 
         bool mIsRotating = false;
-        float mCurrentTurnProbability;
+        int mStepsRemaining;
         Vector3 mDestination = Vector3.zero;
 
         enum Direction
         {
+            INIT,
             DIRECTION_LEFT,
             DIRECTION_FORWARD,
             DIRECTION_RIGHT
         }
-        Direction currentDirection = Direction.DIRECTION_FORWARD;
+        Direction currentDirection = Direction.INIT;
 
         new void Start()
         {
             base.Start();
-            mCurrentTurnProbability = mTurnProbability;
-            PlayerManager player = GameManager.GetInstance().GetPlayer();
-            if (player != null)
-                mDestination = player.transform.position;
+            GameManager gameManager = GameManager.GetInstance();
+            if (gameManager != null)
+            {
+                PlayerManager player = gameManager.GetPlayer();
+                if (player != null)
+                    mDestination = player.transform.position;
+            }
             mDestination.y = transform.position.y;
+            mStepsRemaining = GenerateRandomSteps();
         }
         /////////////////////////////////////////////
         protected override void CalculateMove()
         {
-
             if (!mIsRotating)
             {
                 if (IsNearPlayer())
@@ -48,14 +52,20 @@ namespace EvilCubes.Enemy
                 else
                 {
                     //Limit the distance from the player
-                    if (currentDirection != Direction.DIRECTION_FORWARD && Vector3.Distance(transform.position, mDestination) > mMaxDistance)
-                        mCurrentTurnProbability = 1;
-                    if (Random.value < mCurrentTurnProbability)
+                    if (Vector3.Distance(transform.position, mDestination) > mMaxDistance)
+                    {//Here we are too much distant from the player
+                        if (currentDirection != Direction.DIRECTION_FORWARD)
+                            mStepsRemaining = 0;//force to turn
+                        else if (mStepsRemaining == 0 && currentDirection == Direction.DIRECTION_FORWARD)
+                            mStepsRemaining = GenerateRandomSteps();
+                    }
+
+                    if (mStepsRemaining == 0)
                     {
                         //We need to turn...
+                        mStepsRemaining = GenerateRandomSteps();
                         switch (currentDirection)
                         {
-
                             case Direction.DIRECTION_FORWARD:
                                 if (Random.value <= 0.5)
                                 {
@@ -67,25 +77,28 @@ namespace EvilCubes.Enemy
                                     currentDirection = Direction.DIRECTION_RIGHT;
                                     TurnRight();
                                 }
-                                mCurrentTurnProbability = mTurnProbability;
                                 break;
                             case Direction.DIRECTION_LEFT:
-                                currentDirection = Direction.DIRECTION_FORWARD;
-                                LookAtDestination();
-                                mCurrentTurnProbability = mTurnProbability;
-                                break;
                             case Direction.DIRECTION_RIGHT:
-                                //Turn again to forward
+                            case Direction.INIT:
                                 currentDirection = Direction.DIRECTION_FORWARD;
                                 LookAtDestination();
-                                mCurrentTurnProbability = mTurnProbability;
                                 break;
                         }
                     }
                     else
+                    {
                         DoStepWhenPossible();
+                        mStepsRemaining--;
+                    }
                 }
             }
+        }
+
+        /////////////////////////////////////////////
+        int GenerateRandomSteps()
+        {
+            return Random.Range(1, mMaxConsecutiveSteps + 1);
         }
 
         /////////////////////////////////////////////
