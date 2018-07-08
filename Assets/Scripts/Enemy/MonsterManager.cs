@@ -17,6 +17,8 @@ namespace EvilCubes.Enemy
         [SerializeField]
         int mSecondsBeforeStart = 2;
         [SerializeField]
+        int mSecondsBeforeBoss = 2;
+        [SerializeField]
         int minumumSecondsBetweenSpawn = 0;
         [SerializeField]
         int maximumSecondsBetweenSpawn = 5;
@@ -87,12 +89,17 @@ namespace EvilCubes.Enemy
 
             yield return new WaitUntil(() => mEnemyList.Count == 0);
 
-            SpawnBoss();
-
-            if (mWinAction != null)
+            if (mBossEnemyPrefab != null)
             {
-                yield return new WaitUntil(() => mEnemyList.Count == 0);
-                mWinAction();
+                yield return new WaitForSeconds(mSecondsBeforeBoss);
+
+                SpawnBoss();
+
+                if (mWinAction != null)
+                {
+                    yield return new WaitUntil(() => mEnemyList.Count == 0);
+                    mWinAction();
+                }
             }
         }
 
