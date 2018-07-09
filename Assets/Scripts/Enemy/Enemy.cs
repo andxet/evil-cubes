@@ -191,14 +191,13 @@ namespace EvilCubes.Enemy
         {
             mCurrentState = State.CHECK_SPACE_FOR_STEP;
             Vector3 position = NextStepPosition();
-            mStepChecker.CheckPosition(position, transform.localScale, transform.rotation);
+            mStepChecker.DoStepWhenPossible(position, transform.localScale, transform.rotation);
         }
 
         /////////////////////////////////////////////
-        protected bool CheckStep()
+        protected bool IsStepAreaFree()
         {
             //Check the step without do or book it
-            mCurrentState = State.CHECK_SPACE_FOR_STEP;
             Vector3 position = NextStepPosition();
             return mStepChecker.IsAreaFree(position, transform.localScale, transform.rotation);
         }

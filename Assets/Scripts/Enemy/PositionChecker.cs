@@ -43,14 +43,14 @@ namespace EvilCubes.Enemy
         }
 
         /////////////////////////////////////////////
-        public void CheckPosition(Vector3 position, Vector3 scale, Quaternion rotation)
+        public void DoStepWhenPossible(Vector3 position, Vector3 scale, Quaternion rotation)
         {
-            IEnumerator coroutine = CheckPositionCoroutine(position, scale, rotation);
+            IEnumerator coroutine = DoStepWhenPossibleCoroutine(position, scale, rotation);
             StartCoroutine(coroutine);
         }
 
         /////////////////////////////////////////////
-        IEnumerator CheckPositionCoroutine(Vector3 position, Vector3 scale, Quaternion rotation)
+        IEnumerator DoStepWhenPossibleCoroutine(Vector3 position, Vector3 scale, Quaternion rotation)
         {
             //this not work when the rotation side is not a square
             //The collider scale must be Vector3.one
@@ -58,21 +58,11 @@ namespace EvilCubes.Enemy
 
             yield return new WaitForFixedUpdate();
 
-            if (mColliderToIgnore != null)
-                mColliderToIgnore.enabled = false;
             while (!BookPosition(position, scale, rotation))
             {
-                Debug.Log("COLLISION");
-                if (mColliderToIgnore != null)
-                    mColliderToIgnore.enabled = true;
                 yield return new WaitForSeconds(Random.value * POLL_MAX_INTERVAL);
                 yield return new WaitForFixedUpdate();
-                if (mColliderToIgnore != null)
-                    mColliderToIgnore.enabled = false;
             }
-
-            if (mColliderToIgnore != null)
-                mColliderToIgnore.enabled = true;
 
             if (mStepAllowedAction != null)
                 mStepAllowedAction();
@@ -107,7 +97,23 @@ namespace EvilCubes.Enemy
             mScale = scale;
             mRotation = rotation;
 #endif
-            return !Physics.CheckBox(position, scale, rotation, mIntersectLayer);
+            bool testObjectWasActive = false;
+            if(mTestObject != null)
+            {
+                testObjectWasActive = mTestObject.activeInHierarchy;
+                mTestObject.SetActive(false);
+            }
+            if (mColliderToIgnore != null)
+                mColliderToIgnore.enabled = false;
+            
+            bool result = !Physics.CheckBox(position, scale, rotation, mIntersectLayer);
+
+            if (mColliderToIgnore != null)
+                mColliderToIgnore.enabled = true;
+            if (mTestObject != null)
+                mTestObject.SetActive(testObjectWasActive);
+            
+            return result;
         }
 
         /////////////////////////////////////////////

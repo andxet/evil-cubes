@@ -51,6 +51,10 @@ namespace EvilCubes.Enemy
                             mStepsRemaining = GenerateRandomSteps();
                     }
 
+                    //to not get stuck...
+                    if (!IsStepAreaFree())
+                        mStepsRemaining = 0;
+
                     if (mStepsRemaining == 0)
                     {
                         //We need to turn...
