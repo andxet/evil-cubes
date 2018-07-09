@@ -16,6 +16,7 @@ namespace EvilCubes.Enemy
         //Selected a function with this jump length.
         //Start from 0, go high to certain value, return to 0 after mJumpDistance
         float mJumpDistance = 3;
+        /////////////////////////////////////////////
         Vector2 JumpValue(float norm_x)
         {
             float x = Mathf.Lerp(0, mJumpDistance, norm_x);
@@ -24,6 +25,7 @@ namespace EvilCubes.Enemy
         }
 
 
+        /////////////////////////////////////////////
         protected override void CalculateMove()
         {
             if (!mIsJumping)
@@ -40,11 +42,13 @@ namespace EvilCubes.Enemy
             }
         }
 
+        /////////////////////////////////////////////
         void Jump()
         {
             StartCoroutine("JumpCoroutine");
         }
 
+        /////////////////////////////////////////////
         IEnumerator JumpCoroutine()
         {
             mIsJumping = true;

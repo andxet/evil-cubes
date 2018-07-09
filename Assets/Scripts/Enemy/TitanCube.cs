@@ -16,6 +16,7 @@ namespace EvilCubes.Enemy
         TitanCubeState mCurrentTitanState = TitanCubeState.REST;
         float mEndRest = 0;
 
+        /////////////////////////////////////////////
         protected override void CalculateMove()
         {
             switch(mCurrentTitanState)
