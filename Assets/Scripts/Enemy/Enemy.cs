@@ -33,6 +33,7 @@ namespace EvilCubes.Enemy
         State mCurrentState;
 
         protected bool mDied;
+        protected Vector3 mDestination = Vector3.zero;
 
         public delegate void EnemyDieEvent(Enemy enemy);
         EnemyDieEvent mDieAction;
@@ -60,6 +61,14 @@ namespace EvilCubes.Enemy
                 return;
             }
 
+            GameManager gameManager = GameManager.GetInstance();
+            if (gameManager != null)
+            {
+                PlayerManager player = gameManager.GetPlayer();
+                if (player != null)
+                    mDestination = player.transform.position;
+            }
+            mDestination.y = transform.position.y;
             mLifeComponent.RegisterDieAction(StartDie);
             mCurrentState = State.CALCULATE_MOVE;
             mStepChecker.RegisterStepAllowedAction(StartStep);
@@ -188,8 +197,18 @@ namespace EvilCubes.Enemy
         }
 
         /////////////////////////////////////////////
+        protected bool CheckStep()
+        {
+            //Check the step without do or book it
+            mCurrentState = State.CHECK_SPACE_FOR_STEP;
+            Vector3 position = NextStepPosition();
+            return mStepChecker.IsAreaFree(position, transform.localScale, transform.rotation);
+        }
+
+        /////////////////////////////////////////////
         protected void StartStep()
         {
+            //Begin the step coroutine without check
             mMovementComponent.Step();
             mCurrentState = State.MOVING;
         }
@@ -197,13 +216,21 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         protected virtual Vector3 NextStepPosition()
         {
-            return transform.position + mMovementComponent.GetDirectionVector();
+            //Get the position of the next step (in front of the cube)
+            return transform.position + mMovementComponent.GetDirectionVector() * transform.localScale.z;
         }
 
         /////////////////////////////////////////////
         protected bool IsNearPlayer()
         {
-            return PositionChecker.CheckArea(NextStepPosition(), transform.localScale, transform.rotation, 1 << LayerMask.NameToLayer("Player"));
+            return PositionChecker.CheckAreaAvailability(NextStepPosition(), transform.localScale, transform.rotation, 1 << LayerMask.NameToLayer("Player"));
+        }
+
+        /////////////////////////////////////////////
+        protected float DistanceFromObjective()
+        {
+            //the distance from the current objective
+            return Vector3.Distance(transform.position, mDestination);
         }
     }
 }

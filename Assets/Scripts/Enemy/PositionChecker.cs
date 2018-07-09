@@ -16,6 +16,8 @@ namespace EvilCubes.Enemy
         GameObject mTestObject;
         Collider mColliderToIgnore;
 
+        static readonly float POLL_MAX_INTERVAL = 0.1f;
+
         /////////////////////////////////////////////
         void Start()
         {
@@ -47,32 +49,23 @@ namespace EvilCubes.Enemy
             StartCoroutine(coroutine);
         }
 
-#if DEBUG
-        Vector3 mPosition;
-        Vector3 mScale;
-        Quaternion mRotation;
-#endif
-
         /////////////////////////////////////////////
         IEnumerator CheckPositionCoroutine(Vector3 position, Vector3 scale, Quaternion rotation)
         {
-            mPosition = position;
-            mScale = scale;
-            mRotation = rotation;
-
             //this not work when the rotation side is not a square
             //The collider scale must be Vector3.one
             mTestObject.SetActive(false);
 
             yield return new WaitForFixedUpdate();
+
             if (mColliderToIgnore != null)
                 mColliderToIgnore.enabled = false;
-            while (CheckArea(position, scale, rotation, mIntersectLayer))
+            while (!BookPosition(position, scale, rotation))
             {
                 Debug.Log("COLLISION");
                 if (mColliderToIgnore != null)
                     mColliderToIgnore.enabled = true;
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(Random.value * POLL_MAX_INTERVAL);
                 yield return new WaitForFixedUpdate();
                 if (mColliderToIgnore != null)
                     mColliderToIgnore.enabled = false;
@@ -81,19 +74,44 @@ namespace EvilCubes.Enemy
             if (mColliderToIgnore != null)
                 mColliderToIgnore.enabled = true;
 
-            //We take our space
-            mTestObject.transform.position = position;
-            mTestObject.transform.rotation = rotation;
-            mTestObject.transform.localScale = scale;
-            mTestObject.SetActive(true);
-
             if (mStepAllowedAction != null)
                 mStepAllowedAction();
         }
 
+        /////////////////////////////////////////////
+        public bool BookPosition(Vector3 position, Vector3 scale, Quaternion rotation)
+        {
+            if (IsAreaFree(position, scale, rotation))
+            {
+                //We take our space
+                mTestObject.transform.position = position;
+                mTestObject.transform.rotation = rotation;
+                mTestObject.transform.localScale = scale;
+                mTestObject.SetActive(true);
+                return true;
+            }
+            return false;
+        }
+
+#if DEBUG
+        Vector3 mPosition;
+        Vector3 mScale;
+        Quaternion mRotation;
+#endif
 
         /////////////////////////////////////////////
-        public static bool CheckArea(Vector3 position, Vector3 scale, Quaternion rotation, LayerMask layer)
+        public bool IsAreaFree(Vector3 position, Vector3 scale, Quaternion rotation)
+        {
+#if DEBUG
+            mPosition = position;
+            mScale = scale;
+            mRotation = rotation;
+#endif
+            return !Physics.CheckBox(position, scale, rotation, mIntersectLayer);
+        }
+
+        /////////////////////////////////////////////
+        public static bool CheckAreaAvailability(Vector3 position, Vector3 scale, Quaternion rotation, LayerMask layer)
         {
             return Physics.CheckBox(position, scale, rotation, layer);
         }

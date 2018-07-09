@@ -9,25 +9,25 @@ namespace EvilCubes.Enemy
         [SerializeField]
         float mRestTime = 1.5f;
 
-        enum State{
+        enum TitanCubeState{
             END_STEP,
             REST
         }
-        State mCurrentState = State.REST;
+        TitanCubeState mCurrentTitanState = TitanCubeState.REST;
         float mEndRest = 0;
 
         protected override void CalculateMove()
         {
-            switch(mCurrentState)
+            switch(mCurrentTitanState)
             {
-                case State.END_STEP:
+                case TitanCubeState.END_STEP:
                     mEndRest = Time.timeSinceLevelLoad + mRestTime;
-                    mCurrentState = State.REST;
+                    mCurrentTitanState = TitanCubeState.REST;
                     break;
-                case State.REST:
+                case TitanCubeState.REST:
                     if(Time.timeSinceLevelLoad > mEndRest)
                     {
-                        mCurrentState = State.END_STEP;
+                        mCurrentTitanState = TitanCubeState.END_STEP;
                         DoStepWhenPossible();
                     }
                     break;

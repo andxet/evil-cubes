@@ -18,7 +18,6 @@ namespace EvilCubes.Enemy
 
         bool mIsRotating = false;
         int mStepsRemaining;
-        Vector3 mDestination = Vector3.zero;
 
         enum Direction
         {
@@ -32,14 +31,6 @@ namespace EvilCubes.Enemy
         new void Start()
         {
             base.Start();
-            GameManager gameManager = GameManager.GetInstance();
-            if (gameManager != null)
-            {
-                PlayerManager player = gameManager.GetPlayer();
-                if (player != null)
-                    mDestination = player.transform.position;
-            }
-            mDestination.y = transform.position.y;
             mStepsRemaining = GenerateRandomSteps();
         }
         /////////////////////////////////////////////
@@ -52,7 +43,7 @@ namespace EvilCubes.Enemy
                 else
                 {
                     //Limit the distance from the player
-                    if (Vector3.Distance(transform.position, mDestination) > mMaxDistance)
+                    if (DistanceFromObjective() > mMaxDistance)
                     {//Here we are too much distant from the player
                         if (currentDirection != Direction.DIRECTION_FORWARD)
                             mStepsRemaining = 0;//force to turn
@@ -99,12 +90,6 @@ namespace EvilCubes.Enemy
         int GenerateRandomSteps()
         {
             return Random.Range(1, mMaxConsecutiveSteps + 1);
-        }
-
-        /////////////////////////////////////////////
-        protected override Vector3 NextStepPosition()
-        {
-            return transform.position + mMovementComponent.GetDirectionVector();
         }
 
         /////////////////////////////////////////////

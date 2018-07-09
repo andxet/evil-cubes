@@ -73,7 +73,7 @@ namespace EvilCubes.Enemy
         public Vector3 GetDirectionVector()
         {
             //Same scale for z and y. Vector3.one for the collider
-            return - Vector3.Cross(Vector3.up, transform.right) * transform.localScale.z;
+            return - Vector3.Cross(Vector3.up, transform.right).normalized;
         }
 
 #if UNITY_EDITOR

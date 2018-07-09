@@ -52,7 +52,7 @@ namespace EvilCubes.Enemy
                 lookatPosition.y = enemy.transform.position.y;
                 enemy.transform.LookAt(mPlayerObject.transform.position);
                 tries++;
-                positionUnvailable = PositionChecker.CheckArea(enemy.transform.position, enemy.transform.localScale, enemy.transform.rotation, 1 << LayerMask.NameToLayer("Enemy"));
+                positionUnvailable = PositionChecker.CheckAreaAvailability(enemy.transform.position, enemy.transform.localScale, enemy.transform.rotation, 1 << LayerMask.NameToLayer("Enemy"));
             } while (positionUnvailable && tries < mMaxTries);
 
             //Max attempts reached
