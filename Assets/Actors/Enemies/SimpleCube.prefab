@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46559c93e36c4531927eaf2dc88aadb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mAttack: 10
+  mAttack: 20
   mSpawnProbability: 30
   mDieAnimationLength: 0.5
   mLifeComponent: {fileID: 114065037951374392}

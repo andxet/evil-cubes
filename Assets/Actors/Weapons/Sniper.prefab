@@ -258,6 +258,6 @@ MonoBehaviour:
   mBulletPrefab: {fileID: 1375621605637448, guid: 315290fccad7b432a8f3f6ab55d4cf6e,
     type: 2}
   mShootPoint: {fileID: 1023732169918624}
-  mCoolDownTime: 3
+  mCoolDownTime: 2
   mImprecision: 0
   mBulletShooted: 1

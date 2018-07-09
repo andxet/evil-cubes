@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61afc2b71a8a4bda83b90be6ece2fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mAttack: 10
+  mAttack: 20
   mSpawnProbability: 30
   mDieAnimationLength: 0.5
   mLifeComponent: {fileID: 114065037951374392}
@@ -160,7 +160,7 @@ MonoBehaviour:
   mStepChecker: {fileID: 114966831051742334}
   mMaxDistance: 10
   mRotationVelocity: 0.6
-  mTurnProbability: 0.3
+  mMaxConsecutiveSteps: 5
 --- !u!114 &114306546069234660
 MonoBehaviour:
   m_ObjectHideFlags: 1
