@@ -53,7 +53,6 @@ namespace EvilCubes.Core
         /////////////////////////////////////////////
         public void Die()
         {
-            Debug.Log(name + " is dead");
             if (dieAction != null)
                 dieAction();
             else

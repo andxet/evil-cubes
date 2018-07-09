@@ -105,7 +105,6 @@ namespace EvilCubes.Enemy
             if (mDied)
                 return;
             mDied = true;
-            Debug.Log("die callback");
 
             //Stop moving
             mMovementComponent.enabled = false;
@@ -177,7 +176,6 @@ namespace EvilCubes.Enemy
         /////////////////////////////////////////////
         void OnTriggerEnter(Collider col)
         {
-            Debug.Log("Collision enemy");
             PlayerManager player = col.GetComponent<PlayerManager>();
             LifeComponent life = col.GetComponent<LifeComponent>();
             if (player != null)

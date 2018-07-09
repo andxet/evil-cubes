@@ -132,7 +132,6 @@ namespace EvilCubes.Enemy
 
             Quaternion startRotation = transform.rotation;
             Quaternion destRotation = rotation * startRotation;
-            Debug.Log("Starting rotation coroutine");
             float progress = 0;
             float startTime = Time.timeSinceLevelLoad;
             while (progress < 1)
