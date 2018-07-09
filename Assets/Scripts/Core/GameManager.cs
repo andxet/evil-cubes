@@ -34,6 +34,7 @@ namespace EvilCubes.Core
         public void TitleScreen()
         {
             Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             Time.timeScale = 1;
             SceneManager.LoadScene("TitleScene");
         }
@@ -139,6 +140,7 @@ namespace EvilCubes.Core
         {
             mGameEnded = true;
             Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             Time.timeScale = 0;
             mUI.Win();
         }
@@ -148,6 +150,7 @@ namespace EvilCubes.Core
         {
             mGameEnded = true;
             Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
             Time.timeScale = 0;
             mUI.Lose();
         }
