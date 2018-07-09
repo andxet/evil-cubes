@@ -61,7 +61,7 @@ namespace EvilCubes.Core
             mUI.ExitPause();
             mCurrentPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = true;
+            Cursor.visible = false;
             Time.timeScale = 1;
         }
     }

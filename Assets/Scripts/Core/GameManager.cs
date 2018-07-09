@@ -154,7 +154,7 @@ namespace EvilCubes.Core
         {
             mGameEnded = true;
             Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = false;
+            Cursor.visible = true;
             Time.timeScale = 0;
             mUI.Lose();
         }
