@@ -33,6 +33,8 @@ namespace EvilCubes.Enemy
 
         public delegate void WinAction();
         WinAction mWinAction;
+        public delegate void BossApproachingAction();
+        BossApproachingAction mBossApproachingAction;
         IEnemySpawner enemySpawner;
 
         /////////////////////////////////////////////
@@ -91,6 +93,8 @@ namespace EvilCubes.Enemy
 
             if (mBossEnemyPrefab != null)
             {
+                if (mBossApproachingAction != null)
+                    mBossApproachingAction();
                 yield return new WaitForSeconds(mSecondsBeforeBoss);
 
                 SpawnBoss();
@@ -154,6 +158,12 @@ namespace EvilCubes.Enemy
         public void RegisterWinAction(WinAction action)
         {
             mWinAction = action;
+        }
+
+        /////////////////////////////////////////////
+        public void RegisterBossApproachingAction(BossApproachingAction action)
+        {
+            mBossApproachingAction = action;
         }
 
         /////////////////////////////////////////////

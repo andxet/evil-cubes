@@ -94,7 +94,11 @@ namespace EvilCubes.Core
                 //return;
             }
             else
+            {
                 monsterManager.RegisterWinAction(Win);
+                if(mUI != null)
+                    monsterManager.RegisterBossApproachingAction(mUI.BossApproaching);
+            }
         }
 
         /////////////////////////////////////////////
